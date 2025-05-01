@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manjeet Singh | Portfolio</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #000;
+      color: #fff;
+      text-align: center;
+    }
+
+    h1 {
+      color: #5cd6ff;
+      font-size: 2.5em;
+      margin-bottom: 0;
+      text-shadow: 0 0 10px #5cd6ff;
+      animation: fadeInUp 1s ease;
+    }
+
+    .intro-container {
+      padding: 40px 20px;
+      animation: fadeIn 1.5s ease;
+    }
+
+    .profile-pic {
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      border: 3px solid #5cd6ff;
+      object-fit: cover;
+      margin: 20px auto;
+      box-shadow: 0 0 30px rgba(92, 214, 255, 0.3);
+      transition: transform 0.4s ease;
+    }
+
+    .profile-pic:hover {
+      transform: scale(1.05);
+    }
+
+    .about {
+      max-width: 650px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(92, 214, 255, 0.1);
+      font-size: 1.05em;
+      line-height: 1.6;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin: 30px 0;
+    }
+
+    .button {
+      background-color: #000;
+      padding: 12px 20px;
+      border-radius: 10px;
+      text-decoration: none;
+      color: #fff;
+      border: 2px solid #5cd6ff;
+      transition: all 0.3s ease;
+      font-weight: bold;
+    }
+
+    .button:hover {
+      background-color: #5cd6ff;
+      color: #000;
+    }
+
+    footer {
+      padding: 20px;
+      font-size: 0.9em;
+      color: #aaa;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="intro-container">
+    <h1>👋 Hi, I’m Manjeet Singh</h1>
+    <img src="12223.jpg" alt="Manjeet Singh" class="profile-pic"/>
+    <div class="about">
+      <p>I’m an <strong>IT Specialist</strong> and aspiring <strong>cybersecurity professional</strong> with hands-on experience in system administration, endpoint security, and technical support in higher education environments.</p>
+      <p>I enjoy creating tools like phishing simulators to spread awareness, working on coding projects, building PCs, and doing seva. I speak Punjabi, Burmese, and English, and I’m currently studying Computer Networks & Systems at <strong>San Jose State University</strong>.</p>
+      <p>If you’re interested in collaborating or learning more about what I can offer, let’s find some time to connect! </p>
+    </div>
+  </section>
+
+  <div class="buttons">
+    <a href="Tech Resumeupdated.pdf" class="button" download>📄 Resume</a>
+    <a href="mailto:satmanjeetsingh@gmail.com" class="button">✉️ Email</a>
+    <a href="https://calendly.com/manjeetsingh-/meet-with-manjeetsingh" class="button" target="_blank">📅 Meet w/Me</a>
+    <a href="tel:7148333661" class="button">📞 Call Me</a>
+  </div>
+
+  <footer>
+    © Manjeet Singh 2025 | Made with ❤️ & Code
+  </footer>
+
+</body>
+</html>
