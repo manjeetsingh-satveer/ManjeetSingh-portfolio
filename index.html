@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,14 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Manjeet Singh | Portfolio</title>
   <style>
-    body {
+    html {
+  scroll-behavior: smooth;
+}
+
+body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
       background-color: #000;
       color: #fff;
       text-align: center;
     }
-
     h1 {
       color: #5cd6ff;
       font-size: 2.5em;
@@ -20,12 +24,10 @@
       text-shadow: 0 0 10px #5cd6ff;
       animation: fadeInUp 1s ease;
     }
-
     .intro-container {
       padding: 40px 20px;
       animation: fadeIn 1.5s ease;
     }
-
     .profile-pic {
       width: 170px;
       height: 170px;
@@ -36,11 +38,9 @@
       box-shadow: 0 0 30px rgba(92, 214, 255, 0.3);
       transition: transform 0.4s ease;
     }
-
     .profile-pic:hover {
       transform: scale(1.05);
     }
-
     .about {
       max-width: 650px;
       margin: 0 auto;
@@ -51,7 +51,6 @@
       font-size: 1.05em;
       line-height: 1.6;
     }
-
     .buttons {
       display: flex;
       justify-content: center;
@@ -59,7 +58,6 @@
       flex-wrap: wrap;
       margin: 30px 0;
     }
-
     .button {
       background-color: #000;
       padding: 12px 20px;
@@ -70,26 +68,85 @@
       transition: all 0.3s ease;
       font-weight: bold;
     }
-
     .button:hover {
       background-color: #5cd6ff;
       color: #000;
     }
-
     footer {
       padding: 20px;
       font-size: 0.9em;
       color: #aaa;
     }
-
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
     }
-
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+    .projects {
+      padding: 60px 20px;
+      background-color: #0a0a0a;
+    }
+    .projects h2 {
+      color: #5cd6ff;
+      font-size: 2em;
+      margin-bottom: 30px;
+    }
+    .project-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
+    }
+    .project-card {
+      background-color: #111;
+      border: 1px solid #5cd6ff;
+      border-radius: 12px;
+      padding: 20px;
+      width: 300px;
+      box-shadow: 0 0 10px rgba(92, 214, 255, 0.1);
+    }
+    .project-card img {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+    .project-card h3 {
+      margin: 0 0 10px 0;
+      color: #5cd6ff;
+    }
+    .project-card p {
+      font-size: 0.95em;
+      margin-bottom: 10px;
+      color: #ccc;
+    }
+    .project-card a {
+      color: #5cd6ff;
+      text-decoration: none;
+      margin-right: 10px;
+    }
+    .project-card a:hover {
+      text-decoration: underline;
+    }
+    .current-work {
+      background-color: #000;
+      color: #fff;
+      padding: 50px 20px;
+      max-width: 800px;
+      margin: auto;
+      text-align: left;
+    }
+    .current-work h2 {
+      color: #5cd6ff;
+      font-size: 1.8em;
+      margin-bottom: 20px;
+    }
+    .current-work p {
+      margin-bottom: 15px;
+      color: #ccc;
+      font-size: 1.05em;
     }
   </style>
 </head>
@@ -101,16 +158,44 @@
     <div class="about">
       <p>I’m an <strong>IT Specialist</strong> and aspiring <strong>cybersecurity professional</strong> with hands-on experience in system administration, endpoint security, and technical support in higher education environments.</p>
       <p>I enjoy creating tools like phishing simulators to spread awareness, working on coding projects, building PCs, and doing seva. I speak Punjabi, Burmese, and English, and I’m currently studying Computer Networks & Systems at <strong>San Jose State University</strong>.</p>
-      <p>If you’re interested in collaborating or learning more about what I can offer, let’s find some time to connect! </p>
+      <p>If you're interested in collaborating or learning more about what I can offer, let’s find some time to connect!</p>
     </div>
   </section>
 
   <div class="buttons">
+    <a href="#my-work" class="button">💼 My Work</a>
     <a href="Tech Resumeupdated.pdf" class="button" download>📄 Resume</a>
     <a href="mailto:satmanjeetsingh@gmail.com" class="button">✉️ Email</a>
     <a href="https://calendly.com/manjeetsingh-/meet-with-manjeetsingh" class="button" target="_blank">📅 Meet w/Me</a>
+    <a href="https://www.linkedin.com/in/manjeet-singh-02312b244/" class="button" target="_blank">🔗 LinkedIn</a>
     <a href="tel:7148333661" class="button">📞 Call Me</a>
   </div>
+
+  <section id="my-work" class="projects">
+    <h2>🚀 Projects</h2>
+    <div class="project-grid">
+      <div class="project-card">
+        <img src="project1.jpg" alt="Phishing Simulator">
+        <h3>Phishing Awareness Simulator</h3>
+        <p>Interactive site to help users spot scam tactics. Made with HTML, CSS & JavaScript.</p>
+        <a href="https://manjeetsingh-satveer.github.io/Phishing-Awareness-Website/" target="_blank">🔗 Live Site</a> |
+        <a href="https://github.com/manjeetsingh-satveer/Phishing-Awareness-Website" target="_blank">💻 GitHub</a>
+      </div>
+      <div class="project-card">
+        <img src="project2.jpg" alt="Expense Tracker">
+        <h3>Expense Tracker</h3>
+        <p>Console app to track income/expenses using file I/O & OOP. Built in Java.</p>
+        <a href="https://github.com/manjeetsingh-satveer/Expense-Tracker" target="_blank">💻 GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="current-work">
+    <h2>💼 What I’m Working On</h2>
+    <p>🔧 Currently working as an <strong>IT Specialist</strong> at Coast Community College District, providing end-user tech support, deploying systems using Intune and PDQ, and optimizing classroom AV setups.</p>
+    <p>🛡️ Building skills in cybersecurity through <strong>TryHackMe labs</strong> and the <strong>Google Cybersecurity Certificate</strong> — focused on threat detection, endpoint hardening, and network defense.</p>
+    <p>🧠 Learning new technologies in C++, Python, and Java — while managing help desk tickets, scripting automation, and collaborating on internal tools for the department.</p>
+  </section>
 
   <footer>
     © Manjeet Singh 2025 | Made with ❤️ & Code
