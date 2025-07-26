@@ -5,17 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Manjeet Singh | Portfolio</title>
 
-  <!-- Typed.js for typing animation -->
+  <!-- Typed.js -->
   <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
 
-  <!-- tsParticles for background dots -->
+  <!-- tsParticles -->
   <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
 
   <style>
-    html {
-      scroll-behavior: smooth;
-    }
-
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
@@ -24,8 +21,7 @@
       text-align: center;
       position: relative;
     }
-
-    #tsparticles {
+    #tsparticles, #tsparticles-projects {
       position: fixed;
       width: 100%;
       height: 100%;
@@ -33,20 +29,7 @@
       top: 0;
       left: 0;
     }
-
-    h1 {
-      color: #5cd6ff;
-      font-size: 2.5em;
-      margin-bottom: 0;
-      text-shadow: 0 0 10px #5cd6ff;
-      animation: fadeInUp 1s ease;
-    }
-
-    .intro-container {
-      padding: 40px 20px;
-      animation: fadeIn 1.5s ease;
-    }
-
+    .intro-container { padding: 40px 20px; }
     .profile-pic {
       width: 170px;
       height: 170px;
@@ -55,26 +38,17 @@
       object-fit: cover;
       margin: 20px auto;
       box-shadow: 0 0 30px rgba(92, 214, 255, 0.3);
-      transition: transform 0.4s ease;
     }
-
-    .profile-pic:hover {
-      transform: scale(1.05);
-    }
-
     .about {
       max-width: 650px;
       margin: 0 auto;
       background: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
       padding: 25px;
       border-radius: 15px;
-      box-shadow: 0 0 20px rgba(92, 214, 255, 0.1);
       font-size: 1.05em;
       line-height: 1.6;
     }
-
     .buttons {
       display: flex;
       justify-content: center;
@@ -82,7 +56,6 @@
       flex-wrap: wrap;
       margin: 30px 0;
     }
-
     .button {
       background-color: #000;
       padding: 12px 20px;
@@ -92,85 +65,57 @@
       border: 2px solid #5cd6ff;
       transition: all 0.3s ease;
       font-weight: bold;
+      animation: floatButton 4s ease-in-out infinite;
     }
-
     .button:hover {
       background-color: #5cd6ff;
       color: #000;
     }
-
-    footer {
-      padding: 20px;
-      font-size: 0.9em;
-      color: #aaa;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
     .projects {
       padding: 60px 20px;
-      background-color: #0a0a0a;
+      background-color: transparent;
+      position: relative;
+      z-index: 1;
     }
-
-    .projects h2 {
-      color: #5cd6ff;
-      font-size: 2em;
-      margin-bottom: 30px;
-    }
-
     .project-grid {
       display: flex;
       flex-wrap: wrap;
       gap: 30px;
       justify-content: center;
     }
-
     .project-card {
       background: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
       border: 1px solid #5cd6ff;
       border-radius: 12px;
       padding: 20px;
       width: 300px;
       box-shadow: 0 0 10px rgba(92, 214, 255, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: floatCard 6s ease-in-out infinite;
     }
-
     .project-card img {
       width: 100%;
       border-radius: 8px;
       margin-bottom: 15px;
     }
-
     .project-card h3 {
       margin: 0 0 10px 0;
       color: #5cd6ff;
     }
-
     .project-card p {
       font-size: 0.95em;
       margin-bottom: 10px;
       color: #ccc;
     }
-
     .project-card a {
       color: #5cd6ff;
       text-decoration: none;
       margin-right: 10px;
     }
-
     .project-card a:hover {
       text-decoration: underline;
     }
-
     .current-work {
       background-color: #000;
       color: #fff;
@@ -179,36 +124,42 @@
       margin: auto;
       text-align: left;
     }
-
-    .current-work h2 {
-      color: #5cd6ff;
-      font-size: 1.8em;
-      margin-bottom: 20px;
+    footer {
+      padding: 20px;
+      font-size: 0.9em;
+      color: #aaa;
     }
-
-    .current-work p {
-      margin-bottom: 15px;
-      color: #ccc;
-      font-size: 1.05em;
+    @keyframes floatCard {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
+      100% { transform: translateY(0px); }
+    }
+    @keyframes floatButton {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-4px); }
+      100% { transform: translateY(0px); }
     }
   </style>
 </head>
 <body>
 
-  <!-- tsParticles container -->
+  <!-- tsParticles background -->
   <div id="tsparticles"></div>
 
+  <!-- Intro Section -->
   <section class="intro-container">
     <h1><span id="typed-output"></span></h1>
     <img src="12223.jpg" alt="Manjeet Singh" class="profile-pic"/>
     <div class="about">
       <p>I’m an <strong>IT Specialist</strong> and aspiring <strong>cybersecurity professional</strong> with hands-on experience in system administration, endpoint security, and technical support in higher education environments.</p>
-      <p>I enjoy creating tools like phishing simulators to spread awareness, working on coding projects, building PCs, and doing seva (selfless service). I’m currently developing a custom DNS server to deepen my knowledge of networking and infrastructure security. I speak Punjabi, Burmese, and English, and I’m currently studying <strong>Computer Network System Management</strong> at <strong>San Jose State University</strong>.</p>
+      <p>I enjoy creating tools like phishing simulators, coding personal projects, building PCs, and doing seva (selfless service). I’m currently developing a custom DNS server to deepen my knowledge of networking and infrastructure security.</p>
+      <p>Fluent in <strong>Punjabi</strong>, <strong>Burmese</strong>, and <strong>English</strong>, I bring strong cross-cultural communication to my work. I’m currently studying <strong>Computer Network System Management</strong> at <strong>San Jose State University</strong>.</p>
       <p>I enjoy connecting with professionals and learning through collaboration. I love networking both technically and socially.</p>
-      <p>If you're interested in collaborating or learning more about what I can offer, let’s find some time to connect!</p>
+      <p><strong>If you're interested in collaborating or learning more about what I can offer, let’s find some time to connect!</strong></p>
     </div>
   </section>
 
+  <!-- Buttons -->
   <div class="buttons">
     <a href="#my-work" class="button">💼 My Work</a>
     <a href="Tech Resumeupdated.pdf" class="button" download>📄 Resume</a>
@@ -218,14 +169,16 @@
     <a href="tel:7148333661" class="button">📞 Call Me</a>
   </div>
 
+  <!-- Projects Section -->
   <section id="my-work" class="projects">
-    <h2>🚀 Projects</h2>
+    <div id="tsparticles-projects" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; opacity: 0.6;"></div>
+    <h2><span class="rocket-emoji">🚀</span> Projects</h2>
     <div class="project-grid">
       <div class="project-card">
         <img src="project1.jpg" alt="Phishing Simulator">
         <h3>Phishing Awareness Simulator</h3>
         <p>Interactive site to help users spot scam tactics. Made with HTML, CSS & JavaScript.</p>
-        <a href="https://manjeetsingh-satveer.github.io/Phishing-Awareness-Website/" target="_blank">🔗 Live Site</a> |
+        <a href="https://manjeetsingh-satveer.github.io/Phishing-Awareness-Website/" target="_blank">🔗 Live Site</a><br>
         <a href="https://github.com/manjeetsingh-satveer/Phishing-Awareness-Website" target="_blank">💻 GitHub</a>
       </div>
       <div class="project-card">
@@ -237,19 +190,21 @@
     </div>
   </section>
 
+  <!-- What I'm Working On -->
   <section class="current-work">
     <h2>💼 What I’m Working On</h2>
-    <p>🛠️ Developing a custom <strong>DNS server</strong> from scratch to deepen my understanding of core networking, DNS protocol behavior, and secure system configuration applying real-world troubleshooting and defense strategies.</p>
-    <p>🛡️ Strengthening cybersecurity skills through <strong>CodePath’s Cybersecurity Program</strong>, the <strong>Google Cybersecurity Certificate</strong>,and hands-on labs with <strong>TryHackMe</strong> focused on threat detection, network monitoring, endpoint protection, and ethical hacking.</p>
-    <p>☁️ Actively attending <strong>Cloud Security Analysis San Francisco Chapter</strong> meetups to stay up to date on cloud security trends, evolving threat landscapes,and real-world case studies while networking with professionals in the field.</p>
-    <p>🧠 Continuously building skills in <strong>C++</strong>, <strong>Python</strong>, and <strong> Java</strong> creating personal security-focused projects, participating in CTF challenges, and staying engaged with the cybersecurity community.</p>
+    <p>🛠️ Developing a custom <strong>DNS server</strong> to deepen my understanding of networking, DNS protocol behavior, and system configuration.</p>
+    <p>🛡️ Strengthening cybersecurity skills through <strong>CodePath’s Cybersecurity Program</strong>, the <strong>Google Cybersecurity Certificate</strong>, and <strong>TryHackMe</strong>.</p>
+    <p>☁️ Attending <strong>Cloud Security Analysis San Francisco Chapter</strong> meetups to stay up to date on cloud security trends and real-world case studies.</p>
+    <p>🧠 Building skills in <strong>C++</strong>, <strong>Python</strong>, and <strong>Java</strong> through projects and CTFs.</p>
   </section>
 
+  <!-- Footer -->
   <footer>
     © Manjeet Singh 2025 | Made with ❤️ & Code
   </footer>
 
-  <!-- Typed.js Init -->
+  <!-- Typed.js -->
   <script>
     new Typed("#typed-output", {
       strings: ["👋 Hi, I’m Manjeet Singh"],
@@ -266,12 +221,7 @@
       fpsLimit: 60,
       interactivity: {
         events: { onHover: { enable: true, mode: "grab" }},
-        modes: {
-          grab: {
-            distance: 140,
-            links: { opacity: 1 }
-          }
-        }
+        modes: { grab: { distance: 140, links: { opacity: 0.5 } } }
       },
       particles: {
         color: { value: "#5cd6ff" },
@@ -279,7 +229,7 @@
           color: "#5cd6ff",
           distance: 150,
           enable: true,
-          opacity: 0.3,
+          opacity: 0.6,
           width: 1
         },
         move: {
@@ -287,13 +237,10 @@
           speed: 1,
           outModes: { default: "bounce" }
         },
-        number: {
-          value: 60,
-          density: { enable: true, area: 800 }
-        },
-        opacity: { value: 0.5 },
+        number: { value: 50, density: { enable: true, area: 800 } },
+        opacity: { value: 0.6 },
         shape: { type: "circle" },
-        size: { value: { min: 1, max: 3 } }
+        size: { value: { min: 2, max: 4 } }
       },
       detectRetina: true
     });
@@ -301,4 +248,3 @@
 
 </body>
 </html>
-
