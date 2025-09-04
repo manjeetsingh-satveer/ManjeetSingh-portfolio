@@ -3,7 +3,7 @@
 This is my personal portfolio website built with HTML and CSS, hosted via GitHub Pages.
 
 ## 🔗 Live Site
-[manjeetsinghsatveer.com](https://manjeetsinghsatveer.com)
+(https://manjeet-singh.com)
 
 ## 🛠️ What’s Inside
 - About Me
