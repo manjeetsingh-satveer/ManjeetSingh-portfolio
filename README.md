@@ -1,20 +1,43 @@
-# 💼 Manjeet Singh – Portfolio
+# 💼 Manjeet Singh - Portfolio
 
-This is my personal portfolio website built with HTML and CSS, hosted via GitHub Pages.
+Personal portfolio website for **Manjeet Singh**, focused on cybersecurity, projects, and professional experience.  
+The site is hosted on GitHub Pages with a custom domain.
 
-## 🔗 Live Site
-(https://manjeet-singh.com)
+## 🌐 Live Site
 
-## 🛠️ What’s Inside
-- About Me
-- Resume (Downloadable)
-- Projects with Live Links
-- My Work Section
-- Contact Info
+[https://manjeet-singh.com](https://manjeet-singh.com)
 
-## 📫 Connect with Me
-- 📧 [Email](mailto:satmanjeetsingh@gmail.com)
-- 🔗 [LinkedIn](https://linkedin.com/in/manjeetsingh-satveer)
-- 📅 [Calendly](https://calendly.com/manjeetsingh-/meet-with-manjeetsingh)
+## ✨ Highlights
 
-Thanks for stopping by!
+- Hero section with animated visuals and role typing effect
+- About section and downloadable resume
+- "Eat My Commits" interactive PAC-COMMITS mini game
+- Project showcase with live demos and GitHub links
+- Current work, certifications, and contact strip
+
+## 🗂️ Project Structure
+
+- `index.html` - main portfolio page
+- `pacman-game.html` - standalone PAC-COMMITS game page
+- `Tech Resumeupdated.pdf` - downloadable resume
+- `CNAME` - custom domain configuration for GitHub Pages
+- `pacman-dark.svg`, `pacman-light.svg` - game assets
+
+## 🚀 Run Locally
+
+1. Clone the repository.
+2. Open `index.html` directly in your browser, or use a local static server.
+
+Example with Python:
+
+```bash
+python -m http.server 8000
+```
+
+Then open `http://localhost:8000`.
+
+## 📫 Connect
+
+- Email: [satmanjeetsingh@gmail.com](mailto:satmanjeetsingh@gmail.com)
+- LinkedIn: [manjeet-singh-02312b244](https://www.linkedin.com/in/manjeet-singh-02312b244/)
+- Calendly: [meet-with-manjeetsingh](https://calendly.com/manjeetsingh-/meet-with-manjeetsingh)
