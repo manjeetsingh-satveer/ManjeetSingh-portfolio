@@ -1879,7 +1879,7 @@ function update(dt) {
   if (state === &quot;CLEARED&quot;) { stateT += dt; if (stateT > 2.2) { level++; resetBoard(); updateHud(); toReady(); } return; }
   if (state === &quot;DYING&quot;)   {
     stateT += dt;
-    if (stateT > 1.3) { lives--; updateHud(); if (lives < 0) gameOver(); else toReady(); }
+    if (stateT > 1.3) { lives--; updateHud(); if (lives <= 0) gameOver(); else toReady(); }
     return;
   }
   if (state !== &quot;PLAY&quot;) {
