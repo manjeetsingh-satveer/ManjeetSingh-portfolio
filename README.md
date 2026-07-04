@@ -23,19 +23,6 @@ The site is hosted on GitHub Pages with a custom domain.
 - `CNAME` - custom domain configuration for GitHub Pages
 - `pacman-dark.svg`, `pacman-light.svg` - game assets
 
-## 🚀 Run Locally
-
-1. Clone the repository.
-2. Open `index.html` directly in your browser, or use a local static server.
-
-Example with Python:
-
-```bash
-python -m http.server 8000
-```
-
-Then open `http://localhost:8000`.
-
 ## 📫 Connect
 
 - Email: [satmanjeetsingh@gmail.com](mailto:satmanjeetsingh@gmail.com)
