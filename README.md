@@ -19,7 +19,7 @@ The site is hosted on GitHub Pages with a custom domain.
 
 - `index.html` - main portfolio page
 - `pacman-game.html` - standalone PAC-COMMITS game page
-- `Tech Resumeupdated.pdf` - downloadable resume
+- `Manjeet_Singh_Resume.pdf` - downloadable resume
 - `CNAME` - custom domain configuration for GitHub Pages
 - `pacman-dark.svg`, `pacman-light.svg` - game assets
 
