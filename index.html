@@ -814,6 +814,28 @@
 
     .pl-ghost:hover { border-color: var(--cyan); color: var(--cyan); background: var(--cyan-dim); }
 
+    .pl-arch {
+      border: 1px solid rgba(232,255,71,0.45);
+      color: #f4ff9a;
+      background: rgba(232,255,71,0.12);
+      font-family: 'DM Mono', monospace;
+      font-weight: 600;
+      font-size: 11px;
+    }
+
+    .pl-arch:hover {
+      border-color: rgba(232,255,71,0.8);
+      color: #020408;
+      background: var(--accent);
+      box-shadow: 0 0 24px rgba(232,255,71,0.35);
+    }
+
+    .pl-arch .arch-icon {
+      font-size: 14px;
+      line-height: 1;
+      filter: drop-shadow(0 0 5px rgba(232,255,71,0.55));
+    }
+
     .diagram-modal {
       position: fixed;
       inset: 0;
@@ -2356,7 +2378,9 @@ loadUser(user);
           </div>
           <div class="project-links">
             <a href="https://github.com/arpan-s-dev/QCOM" target="_blank" class="pl-btn pl-accent">💻 GitHub</a>
-            <button type="button" class="pl-btn pl-ghost" data-diagram-target="lodestar" data-diagram-title="Lodestar — System Diagram">🧭 View Diagram</button>
+            <button type="button" class="pl-btn pl-arch" data-diagram-target="lodestar" data-diagram-title="Lodestar — Architecture">
+              <span class="arch-icon">🏗️</span> View Architecture
+            </button>
           </div>
         </div>
       </div>
@@ -2396,7 +2420,9 @@ loadUser(user);
           </div>
           <div class="project-links">
             <a href="https://dard-ai.vercel.app" target="_blank" class="pl-btn pl-cyan">🔴 Live Demo</a>
-            <button type="button" class="pl-btn pl-ghost" data-diagram-target="dard" data-diagram-title="Dard AI — System Diagram">📊 View Diagram</button>
+            <button type="button" class="pl-btn pl-arch" data-diagram-target="dard" data-diagram-title="Dard AI — Architecture">
+              <span class="arch-icon">🏗️</span> View Architecture
+            </button>
           </div>
         </div>
       </div>
@@ -2649,8 +2675,8 @@ loadUser(user);
   <div id="diagramModal" class="diagram-modal" aria-hidden="true">
     <div class="diagram-card" role="dialog" aria-modal="true" aria-labelledby="diagramTitle">
       <div class="diagram-head">
-        <h3 id="diagramTitle">Project Diagram</h3>
-        <button type="button" id="diagramClose" class="diagram-close" aria-label="Close diagram">×</button>
+        <h3 id="diagramTitle">Project Architecture</h3>
+        <button type="button" id="diagramClose" class="diagram-close" aria-label="Close architecture">×</button>
       </div>
       <div class="diagram-body">
         <div id="diagram-lodestar" class="diagram-panel">
@@ -2832,7 +2858,7 @@ flowchart TD
       function openModal(key, heading) {
         renderDiagram(key);
         showPanel(key);
-        title.textContent = heading || 'Project Diagram';
+        title.textContent = heading || 'Project Architecture';
         modal.classList.add('open');
         modal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
