@@ -879,43 +879,25 @@
     .diagram-panel { display: none; }
     .diagram-panel.active { display: block; }
 
-    .diagram-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(120px, 1fr));
-      gap: 14px;
-      align-items: center;
+    .diagram-subtitle {
+      font-family: 'Syne', sans-serif;
+      font-size: 15px;
+      margin-bottom: 12px;
+      color: #d5dee8;
     }
 
-    .diagram-node {
+    .diagram-frame {
       border: 1px solid var(--border2);
-      border-radius: 10px;
-      padding: 12px 10px;
+      border-radius: 12px;
+      background: #020817;
+      padding: 10px;
+      overflow: auto;
+    }
+
+    .diagram-frame .mermaid {
+      min-width: 760px;
+      color: var(--text);
       text-align: center;
-      font-family: 'DM Mono', monospace;
-      font-size: 11px;
-      line-height: 1.45;
-      color: #b5c4d5;
-      background: rgba(92, 214, 255, 0.06);
-    }
-
-    .diagram-node.accent {
-      border-color: rgba(232,255,71,0.5);
-      background: rgba(232,255,71,0.09);
-      color: #f0f8b8;
-    }
-
-    .diagram-node.red {
-      border-color: rgba(239,68,68,0.5);
-      background: rgba(239,68,68,0.1);
-      color: #ffd4d4;
-    }
-
-    .diagram-arrow {
-      text-align: center;
-      color: var(--cyan);
-      font-size: 18px;
-      font-family: 'DM Mono', monospace;
-      opacity: 0.8;
     }
 
     .diagram-note {
@@ -926,10 +908,7 @@
     }
 
     @media (max-width: 760px) {
-      .diagram-grid {
-        grid-template-columns: 1fr;
-      }
-      .diagram-arrow { transform: rotate(90deg); }
+      .diagram-frame .mermaid { min-width: 620px; }
     }
 
     /* Award badge */
@@ -2675,31 +2654,73 @@ loadUser(user);
       </div>
       <div class="diagram-body">
         <div id="diagram-lodestar" class="diagram-panel">
-          <div class="diagram-grid">
-            <div class="diagram-node accent">User Inputs<br>(voice / text / location)</div>
-            <div class="diagram-arrow">→</div>
-            <div class="diagram-node accent">On-Device App<br>(Jetpack Compose)</div>
-            <div class="diagram-node">NOAA + Polaris<br>Navigation Signals</div>
-            <div class="diagram-arrow">→</div>
-            <div class="diagram-node accent">ExecuTorch Runtime<br>Snapdragon NPU</div>
-            <div class="diagram-node">TCCC Medical Corpus<br>93 Chunks</div>
-            <div class="diagram-arrow">→</div>
-            <div class="diagram-node accent">Offline Decisions<br>Guidance + Triage</div>
+          <div class="diagram-subtitle">Architecture Diagram (How Lodestar Works)</div>
+          <div class="diagram-frame">
+            <pre id="mermaid-lodestar" class="mermaid">
+flowchart TD
+    U[User]
+    FE[Single-page Android Frontend<br/>Jetpack Compose]
+    IN[Input Layer<br/>Voice / Text / GPS]
+    NAV[Navigation Engine<br/>Solar + Polaris]
+    NPU[ExecuTorch Runtime<br/>Snapdragon 8 Elite NPU]
+    MED[TCCC Medical Corpus<br/>93 embedded chunks]
+    SAFE[Safety Heuristics<br/>GPS spoofing checks]
+    OUT[Offline Guidance + Triage]
+
+    U --> FE
+    FE --> IN
+    IN --> NPU
+    NAV --> NPU
+    MED --> NPU
+    SAFE --> NPU
+    NPU --> OUT
+    OUT --> FE
+
+    classDef core fill:#1e293b,stroke:#5cd6ff,color:#d9f4ff,stroke-width:1.2px;
+    classDef accent fill:#2a2f10,stroke:#e8ff47,color:#f2ffd0,stroke-width:1.2px;
+    class FE,NPU,OUT core;
+    class NAV,MED,SAFE accent;
+            </pre>
           </div>
           <p class="diagram-note">Fully offline flow: data never leaves device, and navigation + triage decisions are computed locally on Snapdragon hardware.</p>
         </div>
 
         <div id="diagram-dard" class="diagram-panel">
-          <div class="diagram-grid">
-            <div class="diagram-node red">Patient Inputs<br>Symptoms + History</div>
-            <div class="diagram-arrow">→</div>
-            <div class="diagram-node red">React Frontend<br>Secure Intake Forms</div>
-            <div class="diagram-node">Clinical Feature<br>Extraction Layer</div>
-            <div class="diagram-arrow">→</div>
-            <div class="diagram-node red">DFRS + SCM Engine<br>Risk + Match Scores</div>
-            <div class="diagram-node">Claude API<br>Reasoning + Summaries</div>
-            <div class="diagram-arrow">→</div>
-            <div class="diagram-node red">Patient Report Output<br>PDF + Action Insights</div>
+          <div class="diagram-subtitle">Architecture Diagram (How Dard AI Works)</div>
+          <div class="diagram-frame">
+            <pre id="mermaid-dard" class="mermaid">
+flowchart TD
+    U[User]
+    FE[Single-page Frontend<br/>index.html]
+    T1[Track 1: Undiagnosed]
+    T2[Track 2: Flare Prediction]
+    LS[(LocalStorage)]
+    ANA[/POST /api/analyze/]
+    CLAUDE[Anthropic Messages API<br/>claude-sonnet-4-6]
+    PDF[jsPDF + autotable<br/>Doctor-ready report]
+    WEA[/GET /api/weather?lat&lon/]
+    OM[Open-Meteo]
+
+    U --> FE
+    FE --> T1
+    FE --> T2
+    FE --> LS
+    T1 --> ANA
+    T2 --> ANA
+    ANA --> CLAUDE
+    ANA --> LS
+    LS --> PDF
+    PDF --> FE
+    FE --> WEA
+    WEA --> OM
+    OM --> WEA
+    WEA --> FE
+
+    classDef core fill:#2b0f12,stroke:#ef4444,color:#ffd7d7,stroke-width:1.2px;
+    classDef cool fill:#0f2435,stroke:#5cd6ff,color:#d5f2ff,stroke-width:1.2px;
+    class FE,T1,T2,ANA,PDF core;
+    class WEA,OM,LS,CLAUDE cool;
+            </pre>
           </div>
           <p class="diagram-note">Dard AI combines DFRS and SCM outputs with LLM-assisted report generation so patients and physicians can review clear, structured risk insights.</p>
         </div>
@@ -2709,6 +2730,7 @@ loadUser(user);
 
   <!-- tsParticles subtle background -->
   <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 
   <!-- ── Scripts ── -->
   <script>
@@ -2775,6 +2797,7 @@ loadUser(user);
       const modal = document.getElementById('diagramModal');
       const title = document.getElementById('diagramTitle');
       const close = document.getElementById('diagramClose');
+      const rendered = { lodestar: false, dard: false };
       const panels = {
         lodestar: document.getElementById('diagram-lodestar'),
         dard: document.getElementById('diagram-dard')
@@ -2782,13 +2805,32 @@ loadUser(user);
 
       if (!modal || !title || !close || !panels.lodestar || !panels.dard) return;
 
+      if (window.mermaid) {
+        window.mermaid.initialize({
+          startOnLoad: false,
+          theme: 'dark',
+          securityLevel: 'loose',
+          flowchart: { curve: 'basis' }
+        });
+      }
+
       function showPanel(key) {
         Object.keys(panels).forEach(function (k) {
           panels[k].classList.toggle('active', k === key);
         });
       }
 
+      function renderDiagram(key) {
+        if (rendered[key] || !window.mermaid || !panels[key]) return;
+        const chart = panels[key].querySelector('.mermaid');
+        if (!chart) return;
+        window.mermaid.run({ nodes: [chart] }).then(function () {
+          rendered[key] = true;
+        });
+      }
+
       function openModal(key, heading) {
+        renderDiagram(key);
         showPanel(key);
         title.textContent = heading || 'Project Diagram';
         modal.classList.add('open');
