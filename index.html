@@ -782,6 +782,12 @@
       transition: all 0.2s;
     }
 
+    button.pl-btn {
+      border: 1px solid transparent;
+      cursor: pointer;
+      background: transparent;
+    }
+
     .pl-cyan {
       background: var(--cyan);
       color: #020408;
@@ -807,6 +813,124 @@
     }
 
     .pl-ghost:hover { border-color: var(--cyan); color: var(--cyan); background: var(--cyan-dim); }
+
+    .diagram-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 4, 8, 0.75);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 300;
+      backdrop-filter: blur(6px);
+    }
+
+    .diagram-modal.open { display: flex; }
+
+    .diagram-card {
+      width: min(920px, 100%);
+      border: 1px solid var(--border2);
+      border-radius: 14px;
+      background: linear-gradient(135deg, #0b1118, #080c12);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+      overflow: hidden;
+    }
+
+    .diagram-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .diagram-head h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      letter-spacing: -0.3px;
+    }
+
+    .diagram-close {
+      border: 1px solid var(--border2);
+      border-radius: 8px;
+      color: var(--muted);
+      background: transparent;
+      width: 36px;
+      height: 36px;
+      font-size: 20px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .diagram-close:hover {
+      color: var(--cyan);
+      border-color: var(--cyan);
+      background: var(--cyan-dim);
+    }
+
+    .diagram-body {
+      padding: 16px;
+      max-height: min(72vh, 720px);
+      overflow: auto;
+    }
+
+    .diagram-panel { display: none; }
+    .diagram-panel.active { display: block; }
+
+    .diagram-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(120px, 1fr));
+      gap: 14px;
+      align-items: center;
+    }
+
+    .diagram-node {
+      border: 1px solid var(--border2);
+      border-radius: 10px;
+      padding: 12px 10px;
+      text-align: center;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      line-height: 1.45;
+      color: #b5c4d5;
+      background: rgba(92, 214, 255, 0.06);
+    }
+
+    .diagram-node.accent {
+      border-color: rgba(232,255,71,0.5);
+      background: rgba(232,255,71,0.09);
+      color: #f0f8b8;
+    }
+
+    .diagram-node.red {
+      border-color: rgba(239,68,68,0.5);
+      background: rgba(239,68,68,0.1);
+      color: #ffd4d4;
+    }
+
+    .diagram-arrow {
+      text-align: center;
+      color: var(--cyan);
+      font-size: 18px;
+      font-family: 'DM Mono', monospace;
+      opacity: 0.8;
+    }
+
+    .diagram-note {
+      margin-top: 14px;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    @media (max-width: 760px) {
+      .diagram-grid {
+        grid-template-columns: 1fr;
+      }
+      .diagram-arrow { transform: rotate(90deg); }
+    }
 
     /* Award badge */
     .award-badge {
@@ -2253,6 +2377,7 @@ loadUser(user);
           </div>
           <div class="project-links">
             <a href="https://github.com/arpan-s-dev/QCOM" target="_blank" class="pl-btn pl-accent">💻 GitHub</a>
+            <button type="button" class="pl-btn pl-ghost" data-diagram-target="lodestar" data-diagram-title="Lodestar — System Diagram">🧭 View Diagram</button>
           </div>
         </div>
       </div>
@@ -2292,6 +2417,7 @@ loadUser(user);
           </div>
           <div class="project-links">
             <a href="https://dard-ai.vercel.app" target="_blank" class="pl-btn pl-cyan">🔴 Live Demo</a>
+            <button type="button" class="pl-btn pl-ghost" data-diagram-target="dard" data-diagram-title="Dard AI — System Diagram">📊 View Diagram</button>
           </div>
         </div>
       </div>
@@ -2541,6 +2667,46 @@ loadUser(user);
     <div class="footer-copy">© 2026 · Made with ❤️ &amp; Code · San Jose, CA</div>
   </footer>
 
+  <div id="diagramModal" class="diagram-modal" aria-hidden="true">
+    <div class="diagram-card" role="dialog" aria-modal="true" aria-labelledby="diagramTitle">
+      <div class="diagram-head">
+        <h3 id="diagramTitle">Project Diagram</h3>
+        <button type="button" id="diagramClose" class="diagram-close" aria-label="Close diagram">×</button>
+      </div>
+      <div class="diagram-body">
+        <div id="diagram-lodestar" class="diagram-panel">
+          <div class="diagram-grid">
+            <div class="diagram-node accent">User Inputs<br>(voice / text / location)</div>
+            <div class="diagram-arrow">→</div>
+            <div class="diagram-node accent">On-Device App<br>(Jetpack Compose)</div>
+            <div class="diagram-node">NOAA + Polaris<br>Navigation Signals</div>
+            <div class="diagram-arrow">→</div>
+            <div class="diagram-node accent">ExecuTorch Runtime<br>Snapdragon NPU</div>
+            <div class="diagram-node">TCCC Medical Corpus<br>93 Chunks</div>
+            <div class="diagram-arrow">→</div>
+            <div class="diagram-node accent">Offline Decisions<br>Guidance + Triage</div>
+          </div>
+          <p class="diagram-note">Fully offline flow: data never leaves device, and navigation + triage decisions are computed locally on Snapdragon hardware.</p>
+        </div>
+
+        <div id="diagram-dard" class="diagram-panel">
+          <div class="diagram-grid">
+            <div class="diagram-node red">Patient Inputs<br>Symptoms + History</div>
+            <div class="diagram-arrow">→</div>
+            <div class="diagram-node red">React Frontend<br>Secure Intake Forms</div>
+            <div class="diagram-node">Clinical Feature<br>Extraction Layer</div>
+            <div class="diagram-arrow">→</div>
+            <div class="diagram-node red">DFRS + SCM Engine<br>Risk + Match Scores</div>
+            <div class="diagram-node">Claude API<br>Reasoning + Summaries</div>
+            <div class="diagram-arrow">→</div>
+            <div class="diagram-node red">Patient Report Output<br>PDF + Action Insights</div>
+          </div>
+          <p class="diagram-note">Dard AI combines DFRS and SCM outputs with LLM-assisted report generation so patients and physicians can review clear, structured risk insights.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- tsParticles subtle background -->
   <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
 
@@ -2601,6 +2767,55 @@ loadUser(user);
         a.style.color = a.getAttribute('href') === '#' + current ? 'var(--cyan)' : '';
       });
     });
+  </script>
+
+  <script>
+    // Project diagram modal
+    (function () {
+      const modal = document.getElementById('diagramModal');
+      const title = document.getElementById('diagramTitle');
+      const close = document.getElementById('diagramClose');
+      const panels = {
+        lodestar: document.getElementById('diagram-lodestar'),
+        dard: document.getElementById('diagram-dard')
+      };
+
+      if (!modal || !title || !close || !panels.lodestar || !panels.dard) return;
+
+      function showPanel(key) {
+        Object.keys(panels).forEach(function (k) {
+          panels[k].classList.toggle('active', k === key);
+        });
+      }
+
+      function openModal(key, heading) {
+        showPanel(key);
+        title.textContent = heading || 'Project Diagram';
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal() {
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+
+      document.querySelectorAll('[data-diagram-target]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          openModal(btn.getAttribute('data-diagram-target'), btn.getAttribute('data-diagram-title'));
+        });
+      });
+
+      close.addEventListener('click', closeModal);
+      modal.addEventListener('click', function (e) {
+        if (e.target === modal) closeModal();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+      });
+    })();
   </script>
 
 </body>
