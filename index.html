@@ -3292,7 +3292,7 @@ loadUser(user);
             <div class="pfeature">Solo founder — full-stack: React frontend, Claude API backend, serverless Vercel deployment</div>
           </div>
           <div class="project-links">
-            <a href="https://dard-ai.vercel.app" target="_blank" class="pl-btn pl-cyan">🔴 Live Demo</a>
+            <a href="https://dardai.org" target="_blank" class="pl-btn pl-cyan">🔴 Live Demo</a>
             <button type="button" class="pl-btn pl-arch" data-diagram-target="dard" data-diagram-title="Dard AI — Architecture">View Architecture</button>
           </div>
         </div>
@@ -3587,39 +3587,38 @@ flowchart TD
           <div class="diagram-frame">
             <pre id="mermaid-dard" class="mermaid">
 flowchart TD
-    U[User]
-    FE[Single-page Frontend<br/>index.html]
-    T1[Track 1: Undiagnosed]
-    T2[Track 2: Flare Prediction]
-    LS[(LocalStorage)]
-    ANA[/POST /api/analyze/]
-    CLAUDE[Anthropic Messages API<br/>claude-sonnet-4-6]
-    PDF[jsPDF + autotable<br/>Doctor-ready report]
-    WEA[/GET /api/weather?lat&lon/]
-    OM[Open-Meteo]
+    U[User - dardai.org]
+    APP[AppProvider Context<br/>Next.js 14 · TypeScript]
+    ONBOARD[Onboarding Screen]
+    T1[Track 1: Undiagnosed<br/>3D Body Map - Three.js GLB]
+    T2[Track 2: Flare Check-in<br/>Daily symptom log]
+    DASH[Dashboard Screen]
+    ANA[/POST /api/analyze/<br/>claude-haiku-4-5]
+    WEA[/GET /api/weather/<br/>Open-Meteo API]
+    LS[(LocalStorage<br/>draft + results)]
+    PDF[jsPDF Report<br/>Doctor-ready export]
 
-    U --> FE
-    FE --> T1
-    FE --> T2
-    FE --> LS
-    T1 --> ANA
-    T2 --> ANA
-    ANA --> CLAUDE
-    ANA --> LS
-    LS --> PDF
-    PDF --> FE
-    FE --> WEA
-    WEA --> OM
-    OM --> WEA
-    WEA --> FE
+    U --> APP
+    APP --> ONBOARD
+    ONBOARD --> T1
+    ONBOARD --> T2
+    T1 -->|symptom form| ANA
+    T2 --> WEA
+    T2 -->|DFRS scoring| ANA
+    ANA --> DASH
+    WEA --> DASH
+    DASH --> LS
+    DASH --> PDF
 
     classDef core fill:#2b0f12,stroke:#ef4444,color:#ffd7d7,stroke-width:1.2px;
-    classDef cool fill:#0f2435,stroke:#5cd6ff,color:#d5f2ff,stroke-width:1.2px;
-    class FE,T1,T2,ANA,PDF core;
-    class WEA,OM,LS,CLAUDE cool;
+    classDef api fill:#0f2435,stroke:#5cd6ff,color:#d5f2ff,stroke-width:1.2px;
+    classDef store fill:#0f1f10,stroke:#4ade80,color:#d5ffd7,stroke-width:1.2px;
+    class APP,ONBOARD,T1,T2,DASH core;
+    class ANA,WEA api;
+    class LS,PDF store;
             </pre>
           </div>
-          <p class="diagram-note">Dard AI combines DFRS and SCM outputs with LLM-assisted report generation so patients and physicians can review clear, structured risk insights.</p>
+          <p class="diagram-note">Dard AI is a Next.js 14 app (dardai.org) with two AI tracks: Track 1 maps symptoms via a 3D body model and runs undiagnosed pattern analysis; Track 2 scores daily flare risk using weather data (Open-Meteo) and DFRS scoring via Claude Haiku. Results persist in LocalStorage and export as a jsPDF doctor report.</p>
         </div>
       </div>
     </div>
