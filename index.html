@@ -1472,7 +1472,7 @@
     /* ── Journey mobile fallback (stacked vertical list) ── */
     .journey-mobile-list { display: none; }
 
-    @media (max-width: 700px) {
+    @media (max-width: 900px) {
       .journey-stage { display: none; }
       /* no pinning on mobile — the stacked list scrolls normally */
       .journey-inner { min-height: 0; display: block; padding: 80px 0 0; }
@@ -2247,7 +2247,7 @@
       document.addEventListener('keydown', (e) => { if (e.key === 'Escape') releaseHold(); });
 
       // arm only on desktop, with motion allowed, and only when the section is genuinely centred
-      if (!window.matchMedia('(max-width: 700px)').matches) {
+      if (!window.matchMedia('(max-width: 900px)').matches) {
         const holdObserver = new IntersectionObserver((entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting && entry.intersectionRatio >= 0.6) holdForJourney();
