@@ -1472,7 +1472,7 @@
     /* ── Journey mobile fallback (stacked vertical list) ── */
     .journey-mobile-list { display: none; }
 
-    @media (max-width: 700px) {
+    @media (max-width: 900px) {
       .journey-stage { display: none; }
       /* no pinning on mobile — the stacked list scrolls normally */
       .journey-inner { min-height: 0; display: block; padding: 80px 0 0; }
@@ -1809,11 +1809,11 @@
 
         <div class="jm above" style="left:76.92%;top:25.51%">
           <div class="jm-dot"></div>
-          <div class="jm-card"><div class="jm-date">Jun 2024</div><div class="jm-text">Expense Tracker (Java, OOP, File I/O)</div></div>
+          <div class="jm-card"><div class="jm-date">Jun 2024</div><div class="jm-text">Ledgerly (Java desktop budget tracker + CSV export)</div></div>
         </div>
         <div class="jm above" style="left:50.00%;top:25.51%">
           <div class="jm-dot"></div>
-          <div class="jm-card"><div class="jm-date">Apr 2025</div><div class="jm-text">Phishing Awareness Simulator</div></div>
+          <div class="jm-card"><div class="jm-date">Apr 2025</div><div class="jm-text">PhishReady — Phishing Awareness Training</div></div>
         </div>
         <div class="jm above" style="left:23.08%;top:25.51%">
           <div class="jm-dot"></div>
@@ -1912,8 +1912,8 @@
       <div class="jml-item"><div class="jml-dot"></div><div class="jml-card"><div class="jm-date">Jan 2023</div><div class="jm-text">Started AS Computer Science at Orange Coast College</div></div></div>
       <div class="jml-item"><div class="jml-dot"></div><div class="jml-card"><div class="jm-date">May 2023</div><div class="jm-text">Started IT Specialist role at Coast Community College District</div></div></div>
       <div class="jml-item"><div class="jml-dot"></div><div class="jml-card"><div class="jm-date">Feb 2024</div><div class="jm-text">Google Cybersecurity Professional Certificate (Coursera)</div></div></div>
-      <div class="jml-item"><div class="jml-dot"></div><div class="jml-card"><div class="jm-date">Jun 2024</div><div class="jm-text">Expense Tracker (Java, OOP, File I/O)</div></div></div>
-      <div class="jml-item"><div class="jml-dot"></div><div class="jml-card"><div class="jm-date">Apr 2025</div><div class="jm-text">Phishing Awareness Simulator</div></div></div>
+      <div class="jml-item"><div class="jml-dot"></div><div class="jml-card"><div class="jm-date">Jun 2024</div><div class="jm-text">Ledgerly (Java desktop budget tracker + CSV export)</div></div></div>
+      <div class="jml-item"><div class="jml-dot"></div><div class="jml-card"><div class="jm-date">Apr 2025</div><div class="jm-text">PhishReady — Phishing Awareness Training</div></div></div>
       <div class="jml-item"><div class="jml-dot"></div><div class="jml-card"><div class="jm-date">2025</div><div class="jm-text">Transferred to San Jose State University, BS Computer Network System Management</div></div></div>
       <div class="jml-item"><div class="jml-dot"></div><div class="jml-card"><div class="jm-date">Jan 2026</div><div class="jm-text">Manshaan AI — 2nd Place, 13 Hacks Hackathon ($2,000 prize)</div></div></div>
       <div class="jml-item"><div class="jml-dot"></div><div class="jml-card"><div class="jm-date">2026</div><div class="jm-text">Cloudathon 2026 CTF — #10 of 20 teams, Splunk threat hunting</div></div></div>
@@ -2252,7 +2252,7 @@
       document.addEventListener('keydown', (e) => { if (e.key === 'Escape') releaseHold(); });
 
       // arm only on desktop, with motion allowed, and only when the section is genuinely centred
-      if (!window.matchMedia('(max-width: 700px)').matches) {
+      if (!window.matchMedia('(max-width: 900px)').matches) {
         const holdObserver = new IntersectionObserver((entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting && entry.intersectionRatio >= 0.6) holdForJourney();
@@ -3049,24 +3049,24 @@ loadUser(user);
 
     <div class="project-grid">
 
-      <!-- ── Phishing Simulator ── -->
+      <!-- ── PhishReady ── -->
       <div class="project-card reveal reveal-delay-1">
         <div class="project-visual" style="background:linear-gradient(135deg,#070b14,#0a1020)">
           <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
             <div style="text-align:center">
               <div style="font-size:48px;margin-bottom:8px">🎣</div>
-              <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(92,214,255,0.5);letter-spacing:0.12em">PHISHING SIMULATOR</div>
+              <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(92,214,255,0.5);letter-spacing:0.12em">PHISHREADY</div>
             </div>
           </div>
-          <img src="project1.jpg" alt="Phishing Simulator" loading="lazy" style="position:absolute;inset:0" onerror="this.style.display='none'">
+          <img src="project1.jpg" alt="PhishReady" loading="lazy" style="position:absolute;inset:0" onerror="this.style.display='none'">
         </div>
         <div class="project-body">
           <div class="project-tags">
             <span class="ptag cyan">Security</span>
             <span class="ptag">HTML / CSS / JS</span>
           </div>
-          <div class="project-title">Phishing Awareness Simulator</div>
-          <p class="project-desc">Interactive site to help users recognize and avoid phishing scams. Built with HTML, CSS &amp; JavaScript to educate through hands-on simulation.</p>
+          <div class="project-title">PhishReady — Phishing Awareness Training</div>
+          <p class="project-desc">Interactive phishing training platform with realistic email/website scenarios, instant feedback, and practical red-flag cues so users learn to detect social-engineering attacks before clicking.</p>
           <div class="project-links">
             <a href="https://manjeetsingh-satveer.github.io/Phishing-Awareness-Website/" target="_blank" class="pl-btn pl-cyan">🔗 Live Site</a>
             <a href="https://github.com/manjeetsingh-satveer/Phishing-Awareness-Website" target="_blank" class="pl-btn pl-ghost">💻 GitHub</a>
@@ -3297,13 +3297,13 @@ loadUser(user);
             <div class="pfeature">Solo founder — full-stack: React frontend, Claude API backend, serverless Vercel deployment</div>
           </div>
           <div class="project-links">
-            <a href="https://dard-ai.vercel.app" target="_blank" class="pl-btn pl-cyan">🔴 Live Demo</a>
+            <a href="https://dardai.org" target="_blank" class="pl-btn pl-cyan">🔴 Live Demo</a>
             <button type="button" class="pl-btn pl-arch" data-diagram-target="dard" data-diagram-title="Dard AI — Architecture">View Architecture</button>
           </div>
         </div>
       </div>
 
-      <!-- ── TRADEIQ — regular card, side by side with Expense Tracker ── -->
+      <!-- ── TRADEIQ — regular card, side by side with Ledgerly ── -->
       <div class="project-card reveal" style="border-color:rgba(232,255,71,0.2);animation:border-pulse 4s ease-in-out infinite">
         <!-- New visual: dark terminal/dashboard style SVG art -->
         <div class="project-visual" style="background:#050810;min-height:200px">
@@ -3391,7 +3391,7 @@ loadUser(user);
         </div>
       </div>
 
-      <!-- ── Expense Tracker ── -->
+      <!-- ── Ledgerly ── -->
       <div class="project-card reveal reveal-delay-1">
         <div class="project-visual" style="background:linear-gradient(135deg,#070f0a,#0a1a0f)">
           <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
@@ -3400,7 +3400,7 @@ loadUser(user);
               <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(74,222,128,0.5);letter-spacing:0.12em">JAVA · OOP · FILE I/O</div>
             </div>
           </div>
-          <img src="project2.jpg" alt="Expense Tracker" loading="lazy" style="position:absolute;inset:0" onerror="this.style.display='none'">
+          <img src="project2.jpg" alt="Ledgerly" loading="lazy" style="position:absolute;inset:0" onerror="this.style.display='none'">
         </div>
         <div class="project-body">
           <div class="project-tags">
@@ -3408,10 +3408,11 @@ loadUser(user);
             <span class="ptag">OOP</span>
             <span class="ptag">File I/O</span>
           </div>
-          <div class="project-title">Expense Tracker</div>
-          <p class="project-desc">Console application to track income and expenses using file I/O and object-oriented programming. Clean, functional, and data-persistent.</p>
+          <div class="project-title">Ledgerly</div>
+          <p class="project-desc">Free Windows desktop app for tracking income and expenses with monthly views, category insights, and one-click CSV export. Local-first: your data stays on your machine.</p>
           <div class="project-links">
-            <a href="https://github.com/manjeetsingh-satveer/Expense-Tracker" target="_blank" class="pl-btn pl-ghost">💻 GitHub</a>
+            <a href="https://github.com/manjeetsingh-satveer/Ledgerly" target="_blank" class="pl-btn pl-ghost">💻 GitHub</a>
+            <a href="https://manjeetsingh-satveer.github.io/Ledgerly/" target="_blank" class="pl-btn pl-cyan">🔴 Live Demo</a>
           </div>
         </div>
       </div>
@@ -3592,39 +3593,38 @@ flowchart TD
           <div class="diagram-frame">
             <pre id="mermaid-dard" class="mermaid">
 flowchart TD
-    U[User]
-    FE[Single-page Frontend<br/>index.html]
-    T1[Track 1: Undiagnosed]
-    T2[Track 2: Flare Prediction]
-    LS[(LocalStorage)]
-    ANA[/POST /api/analyze/]
-    CLAUDE[Anthropic Messages API<br/>claude-sonnet-4-6]
-    PDF[jsPDF + autotable<br/>Doctor-ready report]
-    WEA[/GET /api/weather?lat&lon/]
-    OM[Open-Meteo]
+    U[User - dardai.org]
+    APP[AppProvider Context<br/>Next.js 14 · TypeScript]
+    ONBOARD[Onboarding Screen]
+    T1[Track 1: Undiagnosed<br/>3D Body Map - Three.js GLB]
+    T2[Track 2: Flare Check-in<br/>Daily symptom log]
+    DASH[Dashboard Screen]
+    ANA[/POST /api/analyze/<br/>claude-haiku-4-5]
+    WEA[/GET /api/weather/<br/>Open-Meteo API]
+    LS[(LocalStorage<br/>draft + results)]
+    PDF[jsPDF Report<br/>Doctor-ready export]
 
-    U --> FE
-    FE --> T1
-    FE --> T2
-    FE --> LS
-    T1 --> ANA
-    T2 --> ANA
-    ANA --> CLAUDE
-    ANA --> LS
-    LS --> PDF
-    PDF --> FE
-    FE --> WEA
-    WEA --> OM
-    OM --> WEA
-    WEA --> FE
+    U --> APP
+    APP --> ONBOARD
+    ONBOARD --> T1
+    ONBOARD --> T2
+    T1 -->|symptom form| ANA
+    T2 --> WEA
+    T2 -->|DFRS scoring| ANA
+    ANA --> DASH
+    WEA --> DASH
+    DASH --> LS
+    DASH --> PDF
 
     classDef core fill:#2b0f12,stroke:#ef4444,color:#ffd7d7,stroke-width:1.2px;
-    classDef cool fill:#0f2435,stroke:#5cd6ff,color:#d5f2ff,stroke-width:1.2px;
-    class FE,T1,T2,ANA,PDF core;
-    class WEA,OM,LS,CLAUDE cool;
+    classDef api fill:#0f2435,stroke:#5cd6ff,color:#d5f2ff,stroke-width:1.2px;
+    classDef store fill:#0f1f10,stroke:#4ade80,color:#d5ffd7,stroke-width:1.2px;
+    class APP,ONBOARD,T1,T2,DASH core;
+    class ANA,WEA api;
+    class LS,PDF store;
             </pre>
           </div>
-          <p class="diagram-note">Dard AI combines DFRS and SCM outputs with LLM-assisted report generation so patients and physicians can review clear, structured risk insights.</p>
+          <p class="diagram-note">Dard AI is a Next.js 14 app (dardai.org) with two AI tracks: Track 1 maps symptoms via a 3D body model and runs undiagnosed pattern analysis; Track 2 scores daily flare risk using weather data (Open-Meteo) and DFRS scoring via Claude Haiku. Results persist in LocalStorage and export as a jsPDF doctor report.</p>
         </div>
       </div>
     </div>
