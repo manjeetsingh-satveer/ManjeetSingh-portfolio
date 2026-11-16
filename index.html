@@ -260,7 +260,7 @@
     @media (prefers-reduced-motion: reduce) {
       .hero-title .type-cursor { animation: none; }
       .journey-car, .journey-car .car-wheel, .jm-dot.is-now { animation: none; }
-      .journey-rocket .flame, .journey-rocket.launching { animation: none; }
+      .journey-rocket .flame, .journey-rocket.launching, .journey-rocket.armed, .journey-stage .journey-cam { animation: none; }
       .bird { animation: none; }
     }
 
@@ -1294,13 +1294,22 @@
     }
     /* the -6% lift keeps the flame's tail on screen so the callout can sit under it */
     @keyframes camera-follow {
-      0% { transform: scale(1) translateY(0); }
-      7% { transform: scale(1.6) translateY(-2%); }
-      14% { transform: scale(2.05) translateY(-4.5%); }
-      22% { transform: scale(2.2) translateY(-6%); }
+      0% { transform: scale(2.2) translateY(-6%); }
       100% { transform: scale(2.2) translateY(calc(var(--launch-dist, 1500px) - 6%)); }
     }
+    /* countdown: camera pushes in on the pad and holds while the engines spool up */
+    .journey-stage.prelaunch { overflow: hidden; }
+    .journey-stage.prelaunch .journey-road-wrap { transform: scale(2.2) translateY(-6%); }
+    .journey-stage.prelaunch .jm,
     .journey-stage.zoomed .jm { opacity: 0; pointer-events: none; }
+    .journey-stage.prelaunch .journey-cam { animation: cam-rumble 0.09s linear infinite; }
+    .journey-stage.zoomed .journey-cam { animation: cam-rumble 0.06s linear 12; }
+    @keyframes cam-rumble {
+      0%, 100% { translate: 0 0; }
+      25% { translate: 1.5px -1px; }
+      50% { translate: -1px 1.5px; }
+      75% { translate: 1px 1px; }
+    }
 
     .liftoff-callout {
       position: absolute;
@@ -1317,6 +1326,13 @@
       opacity: 0;
       pointer-events: none;
       z-index: 11;
+    }
+    .journey-stage.prelaunch .liftoff-callout { opacity: 1; }
+    .liftoff-callout.tick { animation: count-pop 0.6s cubic-bezier(.2,1.4,.4,1); }
+    @keyframes count-pop {
+      0% { transform: translateX(-50%) scale(2.2); opacity: 0; }
+      35% { transform: translateX(-50%) scale(1); opacity: 1; }
+      100% { transform: translateX(-50%) scale(0.9); opacity: 0.85; }
     }
     .journey-stage.zoomed .liftoff-callout { animation: liftoff-blink 0.8s ease-in-out infinite; }
     @keyframes liftoff-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
@@ -1462,11 +1478,61 @@
     .journey-rocket.launching { animation: rocket-launch 3.6s cubic-bezier(.55,0,.85,.45) forwards; }
     @keyframes rocket-launch {
       0% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0deg); }
-      7% { transform: translate(-50%, calc(-50% - 3px)) scale(1.04) rotate(-1deg); }
-      14% { transform: translate(-50%, calc(-50% - 8px)) scale(1.02) rotate(1deg); }
-      22% { transform: translate(-50%, calc(-50% - 26px)) scale(1.01) rotate(0deg); }
+      6% { transform: translate(-50%, calc(-50% - 4px)) scale(1.03) rotate(-0.8deg); }
+      12% { transform: translate(-50%, calc(-50% - 14px)) scale(1.02) rotate(0.8deg); }
+      20% { transform: translate(-50%, calc(-50% - 40px)) scale(1.01) rotate(0deg); }
       92% { opacity: 1; }
       100% { opacity: 0; transform: translate(-50%, calc(-50% - var(--launch-dist, 1500px))) scale(0.6) rotate(0deg); }
+    }
+
+    /* on the pad: engines spool up before release */
+    .journey-rocket.armed:not(.launching) { animation: pad-shake 0.08s linear infinite; }
+    @keyframes pad-shake {
+      0%, 100% { transform: translate(-50%, -50%); }
+      50% { transform: translate(calc(-50% + 0.8px), calc(-50% - 0.6px)); }
+    }
+    .journey-rocket .flames { transform-box: fill-box; transform-origin: center top; transform: scaleY(0.35); opacity: 0.7; transition: transform 1.6s ease-in, opacity 0.4s; }
+    .journey-rocket.armed .flames { transform: scaleY(0.75); opacity: 1; }
+    .journey-rocket.launching .flames { transform: scaleY(1.45) scaleX(1.15); transition-duration: 0.25s; }
+    .journey-rocket .ignite { opacity: 0; transform-box: fill-box; transform-origin: center; transition: opacity 1.4s ease-in; }
+    .journey-rocket.armed .ignite { opacity: 0.55; animation: ignite-pulse 0.18s ease-in-out infinite alternate; }
+    .journey-rocket.launching .ignite { opacity: 0; transition-duration: 0.9s; }
+    @keyframes ignite-pulse { from { transform: scale(0.9); } to { transform: scale(1.12); } }
+    .journey-rocket .trail { transform-box: fill-box; transform-origin: center top; transform: scaleY(0); opacity: 0; }
+    .journey-rocket.launching .trail { animation: trail-grow 3.6s ease-out forwards; }
+    @keyframes trail-grow {
+      0%, 8% { transform: scaleY(0); opacity: 0; }
+      30% { opacity: 0.9; }
+      100% { transform: scaleY(1); opacity: 0.6; }
+    }
+    .journey-rocket.armed .puff5, .journey-rocket.armed .puff6 { animation: puff-drift 1.2s ease-out infinite; }
+    .journey-rocket.armed .puff6 { animation-delay: 0.5s; }
+    .journey-rocket.launching .puff5 { animation: puff-wide 1.6s ease-out 0.02s 1 forwards; }
+    .journey-rocket.launching .puff6 { animation: puff-wide-r 1.7s ease-out 0.05s 1 forwards; }
+    .journey-rocket.launching .puff7 { animation: puff-wide 1.9s ease-out 0.12s 1 forwards; }
+    .journey-rocket.launching .puff8 { animation: puff-wide-r 1.8s ease-out 0.15s 1 forwards; }
+    @keyframes puff-drift {
+      0% { opacity: 0; transform: scale(0.5); }
+      40% { opacity: 0.5; }
+      100% { opacity: 0; transform: scale(1.6) translateY(-6px); }
+    }
+    @keyframes puff-wide {
+      0% { opacity: 0; transform: scale(0.4) translateX(0); }
+      20% { opacity: 0.9; }
+      100% { opacity: 0; transform: scale(3.4) translateX(-46px) translateY(6px); }
+    }
+    @keyframes puff-wide-r {
+      0% { opacity: 0; transform: scale(0.4) translateX(0); }
+      20% { opacity: 0.9; }
+      100% { opacity: 0; transform: scale(3.4) translateX(46px) translateY(6px); }
+    }
+    .journey-rocket .spark { opacity: 0; transform-box: fill-box; transform-origin: center; }
+    .journey-rocket.launching .spark { animation: spark-fly 0.7s ease-out 1 forwards; }
+    .journey-rocket.launching .spark:nth-child(2n) { animation-delay: 0.08s; }
+    .journey-rocket.launching .spark:nth-child(3n) { animation-delay: 0.16s; }
+    @keyframes spark-fly {
+      0% { opacity: 1; transform: translate(0, 0) scale(1); }
+      100% { opacity: 0; transform: translate(var(--sx), var(--sy)) scale(0.3); }
     }
 
     /* ── Journey mobile fallback (stacked vertical list) ── */
@@ -1835,24 +1901,24 @@
 
         <div class="jm above" style="left:76.92%;top:58.16%">
           <div class="jm-dot"></div>
-          <div class="jm-card"><div class="jm-date">May 2026</div><div class="jm-text">Dard AI (chronic illness platform)</div></div>
+          <div class="jm-card"><div class="jm-date">Jun 2026</div><div class="jm-text">Lodestar — 1st Place, Qualcomm × Meta ExecuTorch Hackathon + GitHub Copilot-Powered Build Award</div></div>
         </div>
         <div class="jm above" style="left:50.00%;top:58.16%">
           <div class="jm-dot"></div>
-          <div class="jm-card"><div class="jm-date">Jun 2026</div><div class="jm-text">Lodestar — 1st Place, Qualcomm × Meta ExecuTorch Hackathon + GitHub Copilot-Powered Build Award</div></div>
+          <div class="jm-card"><div class="jm-date">Jun 2026</div><div class="jm-text">AEGIS — Orbital Cyber Threat Intelligence Platform</div></div>
         </div>
         <div class="jm above" style="left:23.08%;top:58.16%">
           <div class="jm-dot"></div>
-          <div class="jm-card"><div class="jm-date">Jun 2026</div><div class="jm-text">AEGIS — Orbital Cyber Threat Intelligence Platform</div></div>
+          <div class="jm-card"><div class="jm-date">Jun – Aug 2026</div><div class="jm-text">IT Support Intern at Power Integrations (NASDAQ: $POWI)</div></div>
         </div>
 
         <div class="jm above" style="left:30.77%;top:74.49%">
           <div class="jm-dot"></div>
-          <div class="jm-card" style="width:130px"><div class="jm-date">Jun 2026</div><div class="jm-text">Started IT Support Intern at Power Integrations (NASDAQ: $POWI)</div></div>
+          <div class="jm-card" style="width:130px"><div class="jm-date">Aug 2026 – Present</div><div class="jm-text"><svg viewBox="0 0 24 24" fill="#FF0000" style="width:12px;height:12px;display:inline-block;vertical-align:-2px;margin-right:4px" aria-hidden="true"><path d="M13.966 22.624l-1.69-4.281H8.122l3.892-9.144 5.662 13.425zM8.884 1.376H0v21.248zm15.116 0h-8.884L24 22.624Z"/></svg>Adobe Campus Ambassador</div></div>
         </div>
         <div class="jm above" style="left:50.00%;top:74.49%">
           <div class="jm-dot"></div>
-          <div class="jm-card" style="width:130px"><div class="jm-date">Aug 2026 – Present</div><div class="jm-text"><svg viewBox="0 0 24 24" fill="#FF0000" style="width:12px;height:12px;display:inline-block;vertical-align:-2px;margin-right:4px" aria-hidden="true"><path d="M13.966 22.624l-1.69-4.281H8.122l3.892-9.144 5.662 13.425zM8.884 1.376H0v21.248zm15.116 0h-8.884L24 22.624Z"/></svg>Adobe Campus Ambassador</div></div>
+          <div class="jm-card" style="width:130px"><div class="jm-date">Nov 2026</div><div class="jm-text">🦖 Muda Lens — Drex-powered Lean Six Sigma waste diagnosis for semiconductor fabs</div></div>
         </div>
         <div class="jm above" style="left:69.23%;top:74.49%">
           <div class="jm-dot is-now"></div>
@@ -1868,21 +1934,48 @@
                 <stop offset="65%" stop-color="#ff8c3b"/>
                 <stop offset="100%" stop-color="#ff5b3b" stop-opacity="0"/>
               </linearGradient>
+              <linearGradient id="trailGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#ffd166" stop-opacity="0.85"/>
+                <stop offset="18%" stop-color="#ff8c3b" stop-opacity="0.45"/>
+                <stop offset="55%" stop-color="#dfe6ee" stop-opacity="0.22"/>
+                <stop offset="100%" stop-color="#dfe6ee" stop-opacity="0"/>
+              </linearGradient>
+              <radialGradient id="igniteGrad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#fff3c4" stop-opacity="0.95"/>
+                <stop offset="45%" stop-color="#ff9d3b" stop-opacity="0.45"/>
+                <stop offset="100%" stop-color="#ff5b3b" stop-opacity="0"/>
+              </radialGradient>
               <radialGradient id="smokeGrad" cx="50%" cy="50%" r="50%">
                 <stop offset="0%" stop-color="#dfe6ee" stop-opacity="0.9"/>
                 <stop offset="100%" stop-color="#dfe6ee" stop-opacity="0"/>
               </radialGradient>
             </defs>
 
+            <path class="trail" d="M-9,40 C-14,160 -26,330 -34,520 L34,520 C26,330 14,160 9,40 Z" fill="url(#trailGrad)"/>
+            <ellipse class="ignite" cx="0" cy="44" rx="44" ry="20" fill="url(#igniteGrad)"/>
             <g class="smoke">
+              <circle class="puff puff5" cx="-20" cy="46" r="22" fill="url(#smokeGrad)"/>
+              <circle class="puff puff6" cx="20" cy="46" r="22" fill="url(#smokeGrad)"/>
+              <circle class="puff puff7" cx="-34" cy="52" r="20" fill="url(#smokeGrad)"/>
+              <circle class="puff puff8" cx="34" cy="52" r="20" fill="url(#smokeGrad)"/>
               <circle class="puff puff1" cx="-28" cy="48" r="24" fill="url(#smokeGrad)"/>
               <circle class="puff puff2" cx="28" cy="50" r="26" fill="url(#smokeGrad)"/>
               <circle class="puff puff3" cx="-10" cy="58" r="20" fill="url(#smokeGrad)"/>
               <circle class="puff puff4" cx="14" cy="56" r="18" fill="url(#smokeGrad)"/>
             </g>
 
-            <path class="flame" d="M-15,36 C-17,68 -9,100 0,132 C9,100 17,68 15,36 Z" fill="url(#flameGrad)"/>
-            <path class="flame" d="M-7,36 C-8,58 -4,78 0,96 C4,78 8,58 7,36 Z" fill="#fff8e0" opacity="0.9"/>
+            <g class="sparks">
+              <circle class="spark" cx="0" cy="40" r="1.6" fill="#ffd166" style="--sx:-38px;--sy:22px"/>
+              <circle class="spark" cx="0" cy="40" r="1.3" fill="#fff3c4" style="--sx:34px;--sy:26px"/>
+              <circle class="spark" cx="0" cy="40" r="1.4" fill="#ff8c3b" style="--sx:-24px;--sy:36px"/>
+              <circle class="spark" cx="0" cy="40" r="1.2" fill="#ffd166" style="--sx:28px;--sy:38px"/>
+              <circle class="spark" cx="0" cy="40" r="1.5" fill="#fff3c4" style="--sx:-46px;--sy:12px"/>
+              <circle class="spark" cx="0" cy="40" r="1.3" fill="#ff8c3b" style="--sx:44px;--sy:14px"/>
+            </g>
+            <g class="flames">
+              <path class="flame" d="M-15,36 C-17,68 -9,100 0,132 C9,100 17,68 15,36 Z" fill="url(#flameGrad)"/>
+              <path class="flame" d="M-7,36 C-8,58 -4,78 0,96 C4,78 8,58 7,36 Z" fill="#fff8e0" opacity="0.9"/>
+            </g>
 
             <rect x="-1.2" y="-112" width="2.4" height="16" fill="#c7cfd9"/>
             <path d="M0,-96 C5,-90 7,-82 7,-74 L-7,-74 C-7,-82 -5,-90 0,-96 Z" fill="#e7ecf2"/>
@@ -1918,11 +2011,11 @@
       <div class="jml-item"><div class="jml-dot"></div><div class="jml-card"><div class="jm-date">Jan 2026</div><div class="jm-text">Manshaan AI — 2nd Place, 13 Hacks Hackathon ($2,000 prize)</div></div></div>
       <div class="jml-item"><div class="jml-dot"></div><div class="jml-card"><div class="jm-date">2026</div><div class="jm-text">Cloudathon 2026 CTF — #10 of 20 teams, Splunk threat hunting</div></div></div>
       <div class="jml-item"><div class="jml-dot"></div><div class="jml-card"><div class="jm-date">Apr 2026</div><div class="jm-text">TradeIQ (AI trading journal/backtester)</div></div></div>
-      <div class="jml-item"><div class="jml-dot"></div><div class="jml-card"><div class="jm-date">May 2026</div><div class="jm-text">Dard AI (chronic illness platform)</div></div></div>
       <div class="jml-item"><div class="jml-dot"></div><div class="jml-card"><div class="jm-date">Jun 2026</div><div class="jm-text">Lodestar — 1st Place, Qualcomm × Meta ExecuTorch Hackathon + GitHub Copilot-Powered Build Award</div></div></div>
       <div class="jml-item"><div class="jml-dot"></div><div class="jml-card"><div class="jm-date">Jun 2026</div><div class="jm-text">AEGIS — Orbital Cyber Threat Intelligence Platform</div></div></div>
-      <div class="jml-item"><div class="jml-dot"></div><div class="jml-card"><div class="jm-date">Jun 2026</div><div class="jm-text">Started IT Support Intern at Power Integrations (NASDAQ: $POWI)</div></div></div>
+      <div class="jml-item"><div class="jml-dot"></div><div class="jml-card"><div class="jm-date">Jun – Aug 2026</div><div class="jm-text">IT Support Intern at Power Integrations (NASDAQ: $POWI)</div></div></div>
       <div class="jml-item"><div class="jml-dot"></div><div class="jml-card"><div class="jm-date">Aug 2026 – Present</div><div class="jm-text"><svg viewBox="0 0 24 24" fill="#FF0000" style="width:12px;height:12px;display:inline-block;vertical-align:-2px;margin-right:4px" aria-hidden="true"><path d="M13.966 22.624l-1.69-4.281H8.122l3.892-9.144 5.662 13.425zM8.884 1.376H0v21.248zm15.116 0h-8.884L24 22.624Z"/></svg>Adobe Campus Ambassador</div></div></div>
+      <div class="jml-item"><div class="jml-dot"></div><div class="jml-card"><div class="jm-date">Nov 2026</div><div class="jm-text">🦖 Muda Lens — Drex-powered Lean Six Sigma waste diagnosis for semiconductor fabs</div></div></div>
       <div class="jml-item"><div class="jml-dot is-now"></div><div class="jml-card"><div class="jm-date">Present</div><div class="jm-text">Pursuing CCNA, active in Cloud Security Alliance SF Chapter</div></div></div>
     </div>
   </section>
@@ -2071,7 +2164,24 @@
       let segDur = Math.max(0.28, (segTo - segFrom) / CRUISE);
       let t = 0;
       let dwellLeft = 0;
-      let phase = 'drive'; // drive | dwell | launch | done
+      let phase = 'drive'; // drive | dwell | countdown | launch | done
+      const COUNT_STEP = 0.6; // seconds per countdown number
+      const callout = stage.querySelector('.liftoff-callout');
+      let countLeft = 0, lastShown = null;
+      function showCount(txt) {
+        if (!callout || txt === lastShown) return;
+        lastShown = txt;
+        callout.textContent = txt;
+        callout.classList.remove('tick');
+        void callout.offsetWidth; // restart the pop for each number
+        callout.classList.add('tick');
+      }
+      function clearLaunchState() {
+        stage.classList.remove('zoomed', 'prelaunch');
+        rocket.classList.remove('launching', 'armed');
+        if (callout) callout.classList.remove('tick');
+        lastShown = null;
+      }
       let paused = false;
       let visible = true;
       let lastTime = null;
@@ -2113,7 +2223,7 @@
         // freeze the camera where the follow ended, then glide back out to the finished journey
         const wrapEl = stage.querySelector('.journey-road-wrap');
         wrapEl.style.transform = getComputedStyle(wrapEl).transform;
-        stage.classList.remove('zoomed');
+        clearLaunchState();
         requestAnimationFrame(() => requestAnimationFrame(() => { wrapEl.style.transform = ''; }));
         phase = 'done'; // journey over — no reset back to the start
         stage.classList.add('finished'); // open the full roadmap up to be read
@@ -2144,10 +2254,21 @@
                 // set on the stage so both the rocket and the camera-follow keyframes inherit it
                 stage.style.setProperty('--launch-dist', Math.round(dist) + 'px');
                 rocket.style.opacity = '1';
-                stage.classList.add('zoomed'); // camera zooms onto the pad — only the launch in view
-                rocket.classList.add('launching');
-                phase = 'launch';
+                rocket.classList.add('armed');      // engines spool up on the pad
+                stage.classList.add('prelaunch');   // camera pushes in and holds on the pad
+                countLeft = COUNT_STEP * 3;
+                phase = 'countdown';
               }
+            }
+          } else if (phase === 'countdown') {
+            countLeft -= dt;
+            if (countLeft > 0) {
+              showCount(String(Math.ceil(countLeft / COUNT_STEP)));
+            } else {
+              showCount('Liftoff');
+              stage.classList.add('zoomed');
+              rocket.classList.add('launching');
+              phase = 'launch';
             }
           } else if (phase === 'dwell') {
             dwellLeft -= dt;
@@ -2201,8 +2322,7 @@
         phase = 'drive';
         carGroup.style.opacity = '1';
         rocket.style.opacity = '0';
-        rocket.classList.remove('launching');
-        stage.classList.remove('zoomed');
+        clearLaunchState();
         stage.classList.remove('finished'); // back to the window, or the replay renders wrong
         targets.forEach((s) => { if (s.el) s.el.classList.remove('active'); });
         setCar(0);
@@ -2232,16 +2352,15 @@
           document.documentElement.style.overflow = 'hidden';
           restartJourney();
           // safety valve: never trap anyone, even if an animation misfires
-          releaseTimer = setTimeout(releaseHold, 22000);
+          releaseTimer = setTimeout(releaseHold, 25000);
         }, 620);
       }
 
       // "skip" means: stop the show and let me read the whole roadmap now
       function finishNow() {
         phase = 'done';
-        rocket.classList.remove('launching');
+        clearLaunchState();
         rocket.style.opacity = '0';
-        stage.classList.remove('zoomed');
         stage.classList.add('finished');
         carGroup.classList.remove('driving');
         carGroup.style.opacity = '0'; // don't strand the car mid-hill on the finished map
@@ -3263,42 +3382,40 @@ loadUser(user);
         </div>
       </div>
 
-      <!-- ── Dard AI ── -->
-      <div class="project-card reveal reveal-delay-2" style="border-color:rgba(220,38,38,0.25);background:linear-gradient(135deg,#0c0204,#180408)">
-        <div class="project-visual" style="background:linear-gradient(135deg,#0a0104,#150306);position:relative;overflow:hidden;min-height:180px">
+      <!-- ── Muda Lens ── -->
+      <div class="project-card reveal reveal-delay-2" style="border-color:rgba(74,222,128,0.25);background:linear-gradient(135deg,#020c06,#04180c)">
+        <div class="project-visual" style="background:linear-gradient(135deg,#010a04,#031208);position:relative;overflow:hidden;min-height:180px">
           <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
             <div style="text-align:center">
-              <div style="font-size:48px;margin-bottom:8px">🩺</div>
-              <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(220,38,38,0.5);letter-spacing:0.12em">DFRS · SCM · CLAUDE API</div>
+              <div style="font-size:48px;margin-bottom:8px">🦖</div>
+              <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(74,222,128,0.5);letter-spacing:0.12em">LEAN · SIX SIGMA · SPC</div>
             </div>
           </div>
-          <div style="position:absolute;top:12px;left:0;right:0;text-align:center;font-family:'DM Mono',monospace;font-size:9px;color:rgba(220,38,38,0.6);letter-spacing:0.15em">DARD AI · CHRONIC ILLNESS PLATFORM</div>
+          <div style="position:absolute;top:12px;left:0;right:0;text-align:center;font-family:'DM Mono',monospace;font-size:9px;color:rgba(74,222,128,0.6);letter-spacing:0.15em">MUDA LENS · FAB WASTE DIAGNOSIS</div>
           <div style="position:absolute;bottom:12px;left:0;right:0;display:flex;justify-content:center;gap:20px">
-            <div style="text-align:center"><div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:#ef4444">DFRS</div><div style="font-family:'DM Mono',monospace;font-size:8px;color:rgba(220,38,38,0.5)">FLARE SCORE</div></div>
-            <div style="text-align:center"><div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:#4ade80">SCM</div><div style="font-family:'DM Mono',monospace;font-size:8px;color:rgba(74,222,128,0.5)">SYMPTOM MATCH</div></div>
-            <div style="text-align:center"><div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:#5cd6ff">AI</div><div style="font-family:'DM Mono',monospace;font-size:8px;color:rgba(92,214,255,0.5)">POWERED</div></div>
+            <div style="text-align:center"><div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:#4ade80">94.3%</div><div style="font-family:'DM Mono',monospace;font-size:8px;color:rgba(74,222,128,0.5)">ALL-4 CORRECT</div></div>
+            <div style="text-align:center"><div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:#5cd6ff">~105×</div><div style="font-family:'DM Mono',monospace;font-size:8px;color:rgba(92,214,255,0.5)">CHEAPER</div></div>
+            <div style="text-align:center"><div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:#e8ff47">283ms</div><div style="font-family:'DM Mono',monospace;font-size:8px;color:rgba(232,255,71,0.5)">P50 LATENCY</div></div>
           </div>
         </div>
         <div class="project-body">
           <div class="project-tags">
-            <span class="ptag" style="border-color:rgba(220,38,38,0.4);color:#ef4444;background:rgba(220,38,38,0.08)">🩺 Healthcare AI</span>
-            <span class="ptag cyan">Claude API</span>
-            <span class="ptag green">React</span>
-            <span class="ptag">Vercel</span>
+            <span class="ptag green">🏭 Semiconductor</span>
+            <span class="ptag cyan">Drex</span>
+            <span class="ptag">Lean Six Sigma</span>
+            <span class="ptag">Node.js</span>
           </div>
-          <div class="project-title">Dard AI — Chronic Illness Platform</div>
-          <p class="project-desc">Solo-founded AI health platform for chronic illness patients — built to address the <strong style="color:#ef4444">avg. 4–7 year diagnostic delay</strong> for conditions like lupus, fibromyalgia, and rheumatoid arthritis. Proprietary algorithms surface missed diagnoses and predict flares before they happen, powered by the Claude API.</p>
+          <div class="project-title">Muda Lens — Fab Waste Diagnosis</div>
+          <p class="project-desc">Inspired by my power-semiconductor internship: Muda Lens hands the weekly decisions of a Lean Six Sigma black belt to <strong style="color:#4ade80">Drex</strong> — which waste matters most, which process step caused it, which countermeasure to run, and whether the lots can ship.</p>
           <div class="project-features">
-            <div class="pfeature"><strong style="color:#ef4444">DFRS</strong> (Dynamic Flare Risk Scoring) — weighted multi-factor algorithm with SHAP-inspired explainability, scoring flare risk in real time</div>
-            <div class="pfeature"><strong style="color:#4ade80">SCM</strong> (Symptom-to-Condition Matching) — maps patient symptom clusters to conditions physicians may have missed</div>
-            <div class="pfeature">AI-generated PDF health reports — structured summaries patients can bring to physician appointments</div>
-            <div class="pfeature">Physician outreach pipeline — active conversations with rheumatologists for clinical validation</div>
-            <div class="pfeature">Research paper drafted (DFRS/SCM methodology) — submitted to medRxiv and JMIR for peer review</div>
-            <div class="pfeature">Solo founder — full-stack: React frontend, Claude API backend, serverless Vercel deployment</div>
+            <div class="pfeature">Reads 12 process steps (oxidation → final test) against baseline and answers 4 typed decisions in one pass, with a calibrated probability for every option</div>
+            <div class="pfeature">Honest benchmark: 70 known-answer cases with injected faults, decoys, and ±15% noise — <strong style="color:#4ade80">94.3%</strong> vs. Claude Opus 5.5 at 92.9% and rule-based SPC at 67.1%</div>
+            <div class="pfeature"><strong style="color:#5cd6ff">$0.16 vs $17.18</strong> per 1k decisions, 283 ms vs 2.3 s — tuned on a separate dev split to avoid overfitting the test set</div>
+            <div class="pfeature">Confidence-based hand-off: low-confidence cases route to an engineer, so Drex decides 69/70 on its own at 95.7% accuracy</div>
           </div>
           <div class="project-links">
-            <a href="https://dardai.org" target="_blank" class="pl-btn pl-cyan">🔴 Live Demo</a>
-            <button type="button" class="pl-btn pl-arch" data-diagram-target="dard" data-diagram-title="Dard AI — Architecture">View Architecture</button>
+            <a href="https://manjeetsingh-satveer.github.io/muda-lens/" target="_blank" class="pl-btn pl-cyan">🟢 Live Demo</a>
+            <a href="https://github.com/manjeetsingh-satveer/muda-lens" target="_blank" class="pl-btn pl-arch">GitHub</a>
           </div>
         </div>
       </div>
@@ -3588,44 +3705,6 @@ flowchart TD
           <p class="diagram-note">Fully offline flow: data never leaves device, and navigation + triage decisions are computed locally on Snapdragon hardware.</p>
         </div>
 
-        <div id="diagram-dard" class="diagram-panel">
-          <div class="diagram-subtitle">Architecture Diagram (How Dard AI Works)</div>
-          <div class="diagram-frame">
-            <pre id="mermaid-dard" class="mermaid">
-flowchart TD
-    U[User - dardai.org]
-    APP[AppProvider Context<br/>Next.js 14 · TypeScript]
-    ONBOARD[Onboarding Screen]
-    T1[Track 1: Undiagnosed<br/>3D Body Map - Three.js GLB]
-    T2[Track 2: Flare Check-in<br/>Daily symptom log]
-    DASH[Dashboard Screen]
-    ANA[/POST /api/analyze/<br/>claude-haiku-4-5]
-    WEA[/GET /api/weather/<br/>Open-Meteo API]
-    LS[(LocalStorage<br/>draft + results)]
-    PDF[jsPDF Report<br/>Doctor-ready export]
-
-    U --> APP
-    APP --> ONBOARD
-    ONBOARD --> T1
-    ONBOARD --> T2
-    T1 -->|symptom form| ANA
-    T2 --> WEA
-    T2 -->|DFRS scoring| ANA
-    ANA --> DASH
-    WEA --> DASH
-    DASH --> LS
-    DASH --> PDF
-
-    classDef core fill:#2b0f12,stroke:#ef4444,color:#ffd7d7,stroke-width:1.2px;
-    classDef api fill:#0f2435,stroke:#5cd6ff,color:#d5f2ff,stroke-width:1.2px;
-    classDef store fill:#0f1f10,stroke:#4ade80,color:#d5ffd7,stroke-width:1.2px;
-    class APP,ONBOARD,T1,T2,DASH core;
-    class ANA,WEA api;
-    class LS,PDF store;
-            </pre>
-          </div>
-          <p class="diagram-note">Dard AI is a Next.js 14 app (dardai.org) with two AI tracks: Track 1 maps symptoms via a 3D body model and runs undiagnosed pattern analysis; Track 2 scores daily flare risk using weather data (Open-Meteo) and DFRS scoring via Claude Haiku. Results persist in LocalStorage and export as a jsPDF doctor report.</p>
-        </div>
       </div>
     </div>
   </div>
