@@ -261,6 +261,7 @@
       .hero-title .type-cursor { animation: none; }
       .journey-car, .journey-car .car-wheel, .jm-dot.is-now { animation: none; }
       .journey-rocket .flame, .journey-rocket.launching, .journey-rocket.armed, .journey-stage .journey-cam { animation: none; }
+      .jml-launch { display: none !important; }
       .bird { animation: none; }
     }
 
@@ -1537,6 +1538,7 @@
 
     /* ── Journey mobile fallback (stacked vertical list) ── */
     .journey-mobile-list { display: none; }
+    .jml-launch { display: none; }
 
     @media (max-width: 900px) {
       .journey-stage { display: none; }
@@ -1550,6 +1552,67 @@
         margin: 0 auto;
         padding: 20px 20px 0 38px;
       }
+      .jml-launch {
+        display: block;
+        position: relative;
+        height: 230px;
+        margin: 8px auto 0;
+        max-width: 1100px;
+        pointer-events: none;
+      }
+      .jml-pad {
+        position: absolute; left: 50%; bottom: 18px;
+        width: 120px; height: 6px; transform: translateX(-50%);
+        border-radius: 3px; background: #2a3340;
+        box-shadow: 0 0 18px rgba(92,214,255,0.15);
+      }
+      .jml-count {
+        position: absolute; left: 50%; top: 6px; transform: translateX(-50%);
+        font-family: 'DM Mono', monospace; font-size: 28px; letter-spacing: 0.25em;
+        text-transform: uppercase; white-space: nowrap; color: var(--accent);
+        text-shadow: 0 0 16px rgba(232,255,71,0.55); opacity: 0;
+      }
+      .jml-count.tick { animation: count-pop 0.6s cubic-bezier(.2,1.4,.4,1) forwards; }
+      .jml-rocket {
+        position: absolute; left: 50%; bottom: 24px; width: 46px;
+        transform: translateX(-50%); z-index: 5;
+      }
+      .jml-rocket svg { display: block; width: 100%; height: auto; overflow: visible; }
+      .jml-rocket .flames { transform-box: fill-box; transform-origin: center top; transform: scaleY(0.25); opacity: 0.6; transition: transform 1.4s ease-in; }
+      .jml-launch.armed .jml-rocket .flames { transform: scaleY(0.7); opacity: 1; }
+      .jml-launch.flying .jml-rocket .flames { transform: scaleY(1.4) scaleX(1.15); transition-duration: 0.25s; }
+      .jml-rocket .flame { transform-box: fill-box; transform-origin: center top; animation: flame-flicker 0.1s ease-in-out infinite alternate; }
+      .jml-rocket .ignite { opacity: 0; transition: opacity 1.2s ease-in; }
+      .jml-launch.armed .jml-rocket .ignite { opacity: 0.6; }
+      .jml-launch.flying .jml-rocket .ignite { opacity: 0; transition-duration: 0.6s; }
+      .jml-launch.armed:not(.flying) .jml-rocket { animation: jml-shake 0.08s linear infinite; }
+      @keyframes jml-shake {
+        0%, 100% { transform: translateX(-50%); }
+        50% { transform: translate(calc(-50% + 0.8px), -0.6px); }
+      }
+      .jml-launch.flying .jml-rocket { animation: jml-fly 2.4s cubic-bezier(.55,0,.85,.45) forwards; }
+      @keyframes jml-fly {
+        0% { transform: translateX(-50%) translateY(0); opacity: 1; }
+        12% { transform: translateX(-50%) translateY(-18px) rotate(-1deg); }
+        90% { opacity: 1; }
+        100% { transform: translateX(-50%) translateY(-120vh); opacity: 0; }
+      }
+      .jml-rocket .trail { transform-box: fill-box; transform-origin: center top; transform: scaleY(0); opacity: 0; }
+      .jml-launch.flying .jml-rocket .trail { animation: trail-grow 2.4s ease-out forwards; }
+      .jml-smoke { position: absolute; left: 50%; bottom: 10px; width: 0; height: 0; }
+      .jml-smoke i {
+        position: absolute; left: -22px; top: -22px; width: 44px; height: 44px; border-radius: 50%;
+        background: radial-gradient(circle, rgba(223,230,238,0.85), rgba(223,230,238,0) 70%);
+        opacity: 0;
+      }
+      .jml-launch.flying .jml-smoke i:nth-child(1) { animation: jml-puff-l 1.6s ease-out forwards; }
+      .jml-launch.flying .jml-smoke i:nth-child(2) { animation: jml-puff-r 1.7s ease-out 0.05s forwards; }
+      .jml-launch.flying .jml-smoke i:nth-child(3) { animation: jml-puff-l 1.9s ease-out 0.15s forwards; }
+      .jml-launch.flying .jml-smoke i:nth-child(4) { animation: jml-puff-r 1.8s ease-out 0.2s forwards; }
+      @keyframes jml-puff-l { 0% { opacity: 0; transform: scale(0.4); } 20% { opacity: 0.9; } 100% { opacity: 0; transform: translateX(-70px) scale(2.6); } }
+      @keyframes jml-puff-r { 0% { opacity: 0; transform: scale(0.4); } 20% { opacity: 0.9; } 100% { opacity: 0; transform: translateX(70px) scale(2.6); } }
+      .jml-launch.done .jml-rocket { opacity: 0; }
+      .jml-launch.done .jml-count { opacity: 0.9; animation: none; }
       .journey-mobile-list::before {
         content: '';
         position: absolute;
@@ -2018,6 +2081,71 @@
       <div class="jml-item"><div class="jml-dot"></div><div class="jml-card"><div class="jm-date">Nov 2026</div><div class="jm-text">🦖 Muda Lens — Drex-powered Lean Six Sigma waste diagnosis for semiconductor fabs</div></div></div>
       <div class="jml-item"><div class="jml-dot is-now"></div><div class="jml-card"><div class="jm-date">Present</div><div class="jm-text">Pursuing CCNA, active in Cloud Security Alliance SF Chapter</div></div></div>
     </div>
+    <div class="jml-launch" id="jmlLaunch" aria-hidden="true">
+      <div class="jml-count" id="jmlCount"></div>
+      <div class="jml-smoke"><i></i><i></i><i></i><i></i></div>
+      <div class="jml-pad"></div>
+      <div class="jml-rocket">
+        <svg viewBox="-60 -115 120 250">
+          <defs>
+            <linearGradient id="mFlame" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#fff8e0"/><stop offset="30%" stop-color="#ffd166"/>
+              <stop offset="65%" stop-color="#ff8c3b"/><stop offset="100%" stop-color="#ff5b3b" stop-opacity="0"/>
+            </linearGradient>
+            <linearGradient id="mTrail" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#ffd166" stop-opacity="0.85"/><stop offset="18%" stop-color="#ff8c3b" stop-opacity="0.45"/>
+              <stop offset="55%" stop-color="#dfe6ee" stop-opacity="0.22"/><stop offset="100%" stop-color="#dfe6ee" stop-opacity="0"/>
+            </linearGradient>
+            <radialGradient id="mIgnite" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#fff3c4" stop-opacity="0.95"/><stop offset="45%" stop-color="#ff9d3b" stop-opacity="0.45"/>
+              <stop offset="100%" stop-color="#ff5b3b" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <path class="trail" d="M-9,40 C-14,160 -26,330 -34,520 L34,520 C26,330 14,160 9,40 Z" fill="url(#mTrail)"/>
+          <ellipse class="ignite" cx="0" cy="44" rx="40" ry="18" fill="url(#mIgnite)"/>
+          <g class="flames">
+            <path class="flame" d="M-15,36 C-17,68 -9,100 0,132 C9,100 17,68 15,36 Z" fill="url(#mFlame)"/>
+            <path class="flame" d="M-7,36 C-8,58 -4,78 0,96 C4,78 8,58 7,36 Z" fill="#fff8e0" opacity="0.9"/>
+          </g>
+          <rect x="-1.2" y="-112" width="2.4" height="16" fill="#c7cfd9"/>
+          <path d="M0,-96 C5,-90 7,-82 7,-74 L-7,-74 C-7,-82 -5,-90 0,-96 Z" fill="#e7ecf2"/>
+          <rect x="-7" y="-74" width="14" height="26" fill="#e7ecf2"/>
+          <rect x="-7" y="-70" width="14" height="3" fill="var(--cyan)" opacity="0.8"/>
+          <rect x="-7" y="-48" width="14" height="10" fill="#6b7684"/>
+          <rect x="-7" y="-38" width="14" height="14" fill="#e7ecf2"/>
+          <rect x="-7" y="-24" width="14" height="8" fill="#e8913f"/>
+          <path d="M-7,-16 L-11,30 L11,30 L7,-16 Z" fill="#e7ecf2"/>
+          <path d="M-7,-8 C-12,0 -16,16 -17,30 L-9,30 C-9,18 -8,4 -7,-8 Z" fill="#dfe4ea"/>
+          <path d="M7,-8 C12,0 16,16 17,30 L9,30 C9,18 8,4 7,-8 Z" fill="#dfe4ea"/>
+          <rect x="-18" y="30" width="8" height="7" fill="#4a5462"/>
+          <rect x="-6" y="30" width="12" height="7" fill="#4a5462"/>
+          <rect x="10" y="30" width="8" height="7" fill="#4a5462"/>
+        </svg>
+      </div>
+    </div>
+    <script>
+      (function () {
+        var box = document.getElementById('jmlLaunch');
+        var count = document.getElementById('jmlCount');
+        if (!box || !('IntersectionObserver' in window)) return;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        function show(t) {
+          count.textContent = t;
+          count.classList.remove('tick'); void count.offsetWidth; count.classList.add('tick');
+        }
+        var io = new IntersectionObserver(function (entries) {
+          if (!entries[0].isIntersecting || getComputedStyle(box).display === 'none') return;
+          io.disconnect();
+          box.classList.add('armed');
+          show('3');
+          setTimeout(function () { show('2'); }, 600);
+          setTimeout(function () { show('1'); }, 1200);
+          setTimeout(function () { show('Liftoff'); box.classList.add('flying'); }, 1800);
+          setTimeout(function () { box.classList.add('done'); }, 4300);
+        }, { threshold: 0.9 });
+        io.observe(box);
+      })();
+    </script>
   </section>
 
   <script>
