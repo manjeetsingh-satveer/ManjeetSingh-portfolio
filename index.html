@@ -510,6 +510,23 @@
     /* ── Projects ── */
     #projects { max-width: 1100px; }
 
+    .find-me {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      margin: -18px 0 34px;
+    }
+    .find-me a {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 14px; border-radius: 999px;
+      border: 1px solid var(--border2); background: var(--surface);
+      font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.04em;
+      color: #c9d4e2; text-decoration: none;
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    }
+    .find-me a:hover { color: var(--cyan); border-color: var(--cyan); transform: translateY(-1px); }
+    .find-me a.hf { border-color: rgba(255,204,77,0.45); color: #ffd866; }
+    .find-me a.hf:hover { border-color: #ffcc4d; color: #ffe08a; }
+    .find-me .lbl { color: var(--muted); font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; align-self: center; margin-right: 4px; }
+
     .project-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -3294,7 +3311,77 @@ loadUser(user);
     <div class="section-label reveal">My work</div>
     <h2 class="section-title reveal">Projects</h2>
 
+    <div class="find-me reveal">
+      <span class="lbl">Find my work on</span>
+      <a class="hf" href="https://huggingface.co/spaces/msingh21satveer/Relay" target="_blank" rel="noopener">🤗 Hugging Face · Relay Space</a>
+      <a href="https://github.com/manjeetsingh-satveer" target="_blank" rel="noopener">GitHub · manjeetsingh-satveer</a>
+      <a href="https://github.com/manjeetsingh-satveer/Relay/releases/latest" target="_blank" rel="noopener">⬇ Relay for Windows</a>
+    </div>
+
     <div class="project-grid">
+
+      <!-- ── Relay (featured) ── -->
+      <div class="project-card featured reveal" style="border-color:rgba(92,214,255,0.3);background:linear-gradient(135deg,#020810,#06101e)">
+        <div class="project-visual" style="background:linear-gradient(135deg,#030a14,#071528);position:relative;overflow:hidden;min-height:260px">
+          <div style="position:absolute;top:14px;left:0;right:0;text-align:center;font-family:'DM Mono',monospace;font-size:9px;color:rgba(92,214,255,0.6);letter-spacing:0.15em">RELAY · YOUR AI TEAM IN ONE CHAT</div>
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
+            <div style="width:78%;max-width:340px;font-family:'DM Mono',monospace;font-size:11px;line-height:1.55">
+              <div style="background:rgba(92,214,255,0.08);border:1px solid rgba(92,214,255,0.25);border-radius:10px;padding:8px 10px;margin-bottom:8px;color:#cfe8ff"><span style="color:#5cd6ff">@GrokBot</span> 3 cheap ways to host a web app? then <span style="color:#e8ff47">@Claude</span> pick the best</div>
+              <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:10px;padding:8px 10px;margin:0 0 8px 18px;color:#9fb0c4"><span style="color:#5cd6ff">Grok Bot</span> · 1. Vercel  2. Fly.io  3. Codespaces…</div>
+              <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:10px;padding:8px 10px;margin-left:18px;color:#9fb0c4"><span style="color:#e8ff47">Claude</span> · Go with Vercel because…</div>
+            </div>
+          </div>
+        </div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="ptag cyan">🆕 Open Source · MIT</span>
+            <span class="ptag" style="border-color:rgba(255,204,77,0.45);color:#ffd866;background:rgba(255,204,77,0.08)">🤗 Hugging Face Space</span>
+            <span class="ptag">TypeScript</span>
+            <span class="ptag">Codespaces</span>
+          </div>
+          <div class="project-title">Relay — Your AI Team in One Chat</div>
+          <p class="project-desc">ChatGPT, Claude, Gemini, Grok, Perplexity, Claude Code and Cursor as bots you <strong style="color:#5cd6ff">@mention</strong> in one chat. Relay drives the real AI apps you already pay for inside your own private cloud desktop, so there are <strong style="color:#e8ff47">no API keys and no API bills</strong>.</p>
+          <div class="project-features">
+            <div class="pfeature">Each bot gets its own chat, job, memory and schedule; hand work between them with @mentions, or let a team discuss while a lead bot answers</div>
+            <div class="pfeature">Runs free in each user's own GitHub Codespace: sign in with GitHub on PC and the app finds, wakes or creates your cloud desktop</div>
+            <div class="pfeature">Windows desktop app with releases on GitHub (v0.3.1), plus a live Hugging Face Space</div>
+          </div>
+          <div class="project-links">
+            <a href="https://huggingface.co/spaces/msingh21satveer/Relay" target="_blank" class="pl-btn pl-cyan">🤗 Hugging Face Space</a>
+            <a href="https://github.com/manjeetsingh-satveer/Relay" target="_blank" class="pl-btn pl-arch">GitHub</a>
+            <a href="https://github.com/manjeetsingh-satveer/Relay/releases/latest" target="_blank" class="pl-btn pl-arch">⬇ Download</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Safe Smart Maps — Cal Hacks 13.0 ── -->
+      <div class="project-card reveal reveal-delay-1" style="border-color:rgba(232,255,71,0.2);background:linear-gradient(135deg,#0a0c04,#11140a)">
+        <div class="project-visual" style="background:linear-gradient(135deg,#080a03,#0f1306);position:relative;overflow:hidden;min-height:180px">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
+            <div style="text-align:center">
+              <div style="font-size:48px;margin-bottom:8px">🗺️</div>
+              <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(232,255,71,0.5);letter-spacing:0.12em">CAL HACKS 13.0</div>
+            </div>
+          </div>
+          <div style="position:absolute;top:12px;left:0;right:0;text-align:center;font-family:'DM Mono',monospace;font-size:9px;color:rgba(232,255,71,0.6);letter-spacing:0.15em">SAFE SMART MAPS · NIGHT WALK ROUTES</div>
+        </div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="ptag" style="border-color:rgba(232,255,71,0.35);color:#e8ff47;background:rgba(232,255,71,0.06)">🏁 Hackathon · Team</span>
+            <span class="ptag cyan">Next.js</span>
+            <span class="ptag">Python</span>
+          </div>
+          <div class="project-title">Safe Smart Maps</div>
+          <p class="project-desc">Built with a team at Cal Hacks 13.0 for students walking home after dark. It compares walking routes by lighting, open places, main roads and help points, scored for the hour you'll actually be on the street.</p>
+          <div class="project-features">
+            <div class="pfeature">Same walk at 8 PM vs. 1 AM: places close, coverage drops, and the scores show it, segment by segment</div>
+            <div class="pfeature">Next.js web app with a scoring API and tunable weights</div>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/BS2611/safe-smart-maps" target="_blank" class="pl-btn pl-arch">GitHub</a>
+          </div>
+        </div>
+      </div>
 
       <!-- ── PhishReady ── -->
       <div class="project-card reveal reveal-delay-1">
