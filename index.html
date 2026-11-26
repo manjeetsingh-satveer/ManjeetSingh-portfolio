@@ -510,34 +510,6 @@
     /* ── Projects ── */
     #projects { max-width: 1100px; }
 
-    .find-me {
-      margin: -14px 0 34px;
-      padding: 18px 20px 20px;
-      border: 1px solid var(--border2);
-      border-radius: 14px;
-      background: linear-gradient(135deg, rgba(92,214,255,0.04), rgba(255,255,255,0.01));
-    }
-    .find-me .lbl {
-      display: block; margin-bottom: 14px;
-      font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.16em;
-      text-transform: uppercase; color: var(--cyan);
-    }
-    .find-me .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-    .find-me a {
-      display: flex; align-items: center; gap: 12px;
-      padding: 14px 16px; border-radius: 10px;
-      border: 1px solid var(--border); background: var(--surface);
-      text-decoration: none; color: #e6edf5;
-      transition: border-color 0.2s, transform 0.2s, background 0.2s;
-    }
-    .find-me a:hover { border-color: var(--cyan); background: var(--surface2); transform: translateY(-2px); }
-    .find-me a.hf:hover { border-color: #ffcc4d; }
-    .find-me .ico { font-size: 22px; line-height: 1; flex: none; }
-    .find-me .t { display: block; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; }
-    .find-me .d { display: block; margin-top: 2px; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
-    .find-me a.hf .t { color: #ffd866; }
-    @media (max-width: 700px) { .find-me .tiles { grid-template-columns: 1fr; } }
-
     .project-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -3321,21 +3293,6 @@ loadUser(user);
   <section id="projects" style="max-width:1100px">
     <div class="section-label reveal">My work</div>
     <h2 class="section-title reveal">Projects</h2>
-
-    <div class="find-me reveal">
-      <span class="lbl">Find my work on</span>
-      <div class="tiles">
-        <a class="hf" href="https://huggingface.co/spaces/msingh21satveer/Relay" target="_blank" rel="noopener">
-          <span class="ico">🤗</span><span><span class="t">Hugging Face</span><span class="d">Relay Space</span></span>
-        </a>
-        <a href="https://github.com/manjeetsingh-satveer" target="_blank" rel="noopener">
-          <span class="ico">💻</span><span><span class="t">GitHub</span><span class="d">manjeetsingh-satveer</span></span>
-        </a>
-        <a href="https://github.com/manjeetsingh-satveer/Relay/releases/latest" target="_blank" rel="noopener">
-          <span class="ico">⬇</span><span><span class="t">Relay for Windows</span><span class="d">Latest release</span></span>
-        </a>
-      </div>
-    </div>
 
     <div class="project-grid">
 
